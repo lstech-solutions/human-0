@@ -20,12 +20,12 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: "22.18.0"
           cache: 'pnpm'
 
       - uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: 9
 
       - name: Install dependencies
         run: pnpm install
