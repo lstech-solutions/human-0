@@ -34,6 +34,14 @@ jobs:
         run: pnpm install
       - name: Build
         run: pnpm --filter @human-0/web build
+      - name: Copy public files
+        run: |
+          mkdir -p apps/web/dist/output
+          cp -r apps/web/public/output/* apps/web/dist/output/
+          cp apps/web/public/favicon.ico apps/web/dist/
+          cp apps/web/public/favicon-*.png apps/web/dist/
+          cp apps/web/public/apple-touch-icon.png apps/web/dist/
+          cp apps/web/public/site.webmanifest apps/web/dist/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

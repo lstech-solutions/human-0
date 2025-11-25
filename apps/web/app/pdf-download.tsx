@@ -41,7 +41,7 @@ export default function PDFDownloadScreen() {
       id: 'canvas-single',
       title: 'Canvas Infographic (Single Page)',
       description: 'One-page vertical infographic with colorful canvas model structure - perfect for presentations',
-      filename: '/output/HUMAN-ZERO-Canvas-Infographic-EN.pdf',
+      filename: '/human-0/output/HUMAN-ZERO-Canvas-Infographic-EN.pdf',
       icon: <FileText size={32} color="#00FF9C" />,
       features: [
         'True single-page design (A4 portrait)',
@@ -59,7 +59,7 @@ export default function PDFDownloadScreen() {
       id: 'canvas-extended',
       title: 'Extended Business Model',
       description: 'Comprehensive detailed version with full analysis and documentation',
-      filename: '/output/HUMAN-ZERO-Business-Model-Extended.pdf',
+      filename: '/human-0/output/HUMAN-ZERO-Business-Model-Extended.pdf',
       icon: <BookOpen size={32} color="#00FF9C" />,
       features: [
         'Detailed section analysis',
@@ -76,8 +76,8 @@ export default function PDFDownloadScreen() {
   ];
 
   const languages: LanguageOption[] = [
-    { code: 'en', name: 'English', flag: '🇬🇧', filename: '/output/HUMAN-ZERO-Canvas-Infographic-EN.pdf' },
-    { code: 'es', name: 'Español', flag: '🇪🇸', filename: '/output/HUMAN-ZERO-Canvas-Infographic-ES.pdf' }
+    { code: 'en', name: 'English', flag: '🇬🇧', filename: '/human-0/output/HUMAN-ZERO-Canvas-Infographic-EN.pdf' },
+    { code: 'es', name: 'Español', flag: '🇪🇸', filename: '/human-0/output/HUMAN-ZERO-Canvas-Infographic-ES.pdf' }
   ];
 
   const downloadPDF = async (pdf: PDFOption) => {
