@@ -85,7 +85,7 @@ jobs:
   release:
     needs: auto-version
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && false # Disabled - releases created manually
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -114,18 +114,5 @@ jobs:
 
       - name: Create Release
         run: |
-          gh release create v${{ steps.version.outputs.version }} \
-            --title "Release v${{ steps.version.outputs.version }}" \
-            --notes "## 🚀 Release v${{ steps.version.outputs.version }}
-            
-            This is an automated release.
-            
-            ### 📋 Changes
-            See the changelog in [PROPER.md](./PROPER.md) for detailed changes.
-            
-            ### 🔗 Installation
-            \`\`\`bash
-            npm install human-0-monorepo@${{ steps.version.outputs.version }}
-            \`\`\`"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "Release creation disabled - create releases manually via GitHub UI"
+          echo "Version: v${{ steps.version.outputs.version }}"
