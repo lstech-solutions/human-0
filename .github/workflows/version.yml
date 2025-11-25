@@ -42,7 +42,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Node.js
@@ -59,15 +58,11 @@ jobs:
         run: |
           # Check if there are meaningful changes
           if git diff --name-only HEAD~1 HEAD | grep -E "(src/|apps/|components/)" > /dev/null; then
-            echo "Meaningful changes detected, bumping patch version"
-            npm run version:patch
+            echo "Meaningful changes detected, version bump should be done manually"
+            echo "Run: npm run version:patch"
           else
             echo "No meaningful changes detected, skipping version bump"
           fi
-
-      - name: Push changes
-        run: |
-          git push --follow-tags
 
   release:
     needs: auto-version
