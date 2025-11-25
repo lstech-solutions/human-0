@@ -25,6 +25,10 @@ jobs:
         with:
           version: 8
 
+      - name: Setup GitHub CLI
+        run: |
+          gh --version
+
       - name: Check version
         run: |
           node scripts/version-manager.js current
@@ -58,6 +62,10 @@ jobs:
         uses: pnpm/action-setup@v3
         with:
           version: 8
+
+      - name: Setup GitHub CLI
+        run: |
+          gh --version
 
       - name: Configure Git
         run: |
@@ -94,6 +102,10 @@ jobs:
         with:
           version: 8
 
+      - name: Setup GitHub CLI
+        run: |
+          gh --version
+
       - name: Get version
         id: version
         run: |
@@ -101,14 +113,10 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.version.outputs.version }}
-          release_name: Release v${{ steps.version.outputs.version }}
-          body: |
-            ## 🚀 Release v${{ steps.version.outputs.version }}
+        run: |
+          gh release create v${{ steps.version.outputs.version }} \
+            --title "Release v${{ steps.version.outputs.version }}" \
+            --notes "## 🚀 Release v${{ steps.version.outputs.version }}
             
             This is an automated release.
             
@@ -116,8 +124,8 @@ jobs:
             See the changelog in [PROPER.md](./PROPER.md) for detailed changes.
             
             ### 🔗 Installation
-            ```bash
+            \`\`\`bash
             npm install human-0-monorepo@${{ steps.version.outputs.version }}
-            ```
-          draft: false
-          prerelease: false
+            \`\`\`"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
