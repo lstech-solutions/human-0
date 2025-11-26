@@ -28,12 +28,19 @@ jobs:
         with:
           node-version: "20"
           cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
       - name: Build
-        run: pnpm --filter @human-0/web build
+        run: |
+          pnpm --filter @human-0/web build
+          pnpm --filter @human-0/docs build
+      - name: Copy docs to web dist
+        run: |
+          mkdir -p apps/web/dist/documentation
+          cp -r apps/docs/build/* apps/web/dist/documentation/
       - name: Copy public files
         run: |
           mkdir -p apps/web/dist/output
