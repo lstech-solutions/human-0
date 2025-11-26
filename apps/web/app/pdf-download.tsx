@@ -41,7 +41,7 @@ export default function PDFDownloadScreen() {
       id: 'canvas-single',
       title: 'Canvas Infographic (Single Page)',
       description: 'One-page vertical infographic with colorful canvas model structure - perfect for presentations',
-      filename: '/human-0/output/HUMAN-ZERO-Canvas-Infographic-EN.pdf',
+      filename: '/output/HUMAN-ZERO-Canvas-Infographic-EN.pdf',
       icon: <FileText size={32} color="#00FF9C" />,
       features: [
         'True single-page design (A4 portrait)',
@@ -59,7 +59,7 @@ export default function PDFDownloadScreen() {
       id: 'canvas-extended',
       title: 'Extended Business Model',
       description: 'Comprehensive detailed version with full analysis and documentation',
-      filename: '/human-0/output/HUMAN-ZERO-Business-Model-Extended.pdf',
+      filename: '/output/HUMAN-ZERO-Business-Model-Extended.pdf',
       icon: <BookOpen size={32} color="#00FF9C" />,
       features: [
         'Detailed section analysis',
@@ -76,8 +76,8 @@ export default function PDFDownloadScreen() {
   ];
 
   const languages: LanguageOption[] = [
-    { code: 'en', name: 'English', flag: '🇬🇧', filename: '/human-0/output/HUMAN-ZERO-Canvas-Infographic-EN.pdf' },
-    { code: 'es', name: 'Español', flag: '🇪🇸', filename: '/human-0/output/HUMAN-ZERO-Canvas-Infographic-ES.pdf' }
+    { code: 'en', name: 'English', flag: '🇬🇧', filename: '/output/HUMAN-ZERO-Canvas-Infographic-EN.pdf' },
+    { code: 'es', name: 'Español', flag: '🇪🇸', filename: '/output/HUMAN-ZERO-Canvas-Infographic-ES.pdf' }
   ];
 
   const downloadPDF = async (pdf: PDFOption) => {
@@ -93,31 +93,63 @@ export default function PDFDownloadScreen() {
         }
       }
       
-      // For web, open the PDF
-      if (typeof window !== 'undefined') {
+      // For web environment
+      if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+        // First, try to check if the file exists by making a HEAD request
+        try {
+          const response = await fetch(downloadFile, { method: 'HEAD' });
+          if (!response.ok) {
+            throw new Error(`PDF file not found (${response.status})`);
+          }
+        } catch (fetchError) {
+          console.error('PDF file check failed:', fetchError);
+          Alert.alert(
+            'PDF No Disponible',
+            `El archivo PDF no está disponible temporalmente. Por favor intente más tarde o contacte soporte.`,
+            [{ text: 'OK' }]
+          );
+          return;
+        }
+        
+        // Create a temporary link element for download
         const link = document.createElement('a');
         link.href = downloadFile;
         link.download = pdf.title.replace(/\s+/g, '-') + '.pdf';
         link.target = '_blank';
+        link.style.display = 'none';
+        
+        // Add to DOM, trigger click, then remove
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         
+        // Show success message
         Alert.alert(
           'PDF Descargado',
           `${pdf.title} ha sido descargado exitosamente.`,
           [{ text: 'OK' }]
         );
-      } else {
-        // For mobile, try to open the PDF
+      } else if (typeof window !== 'undefined') {
+        // Fallback for environments where window exists but document might not
         window.open(downloadFile, '_blank');
+      } else {
+        // Final fallback - show error message
+        Alert.alert(
+          'Entorno No Compatible',
+          'La descarga de PDF no es compatible con este entorno.',
+          [{ text: 'OK' }]
+        );
       }
 
     } catch (error) {
       console.error('PDF download error:', error);
+      
+      // Provide more helpful error message
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      
       Alert.alert(
         'Error al Descargar', 
-        `No se pudo descargar ${pdf.title}. Por favor intente nuevamente.`,
+        `No se pudo descargar ${pdf.title}. Error: ${errorMessage}\n\nPor favor intente nuevamente o contacte soporte.`,
         [{ text: 'OK' }]
       );
     } finally {
