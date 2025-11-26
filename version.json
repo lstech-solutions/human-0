@@ -1,20 +1,24 @@
 {
   "name": "human-zero",
-  "version": "1.5.5",
+  "version": "1.5.6",
   "description": "HUMΛN-Ø - Sustainable impact through Web3 technology",
-  "build": "20251126203945",
+  "build": "20251126210345",
   "changelog": {
     "current": {
-      "version": "1.5.5",
+      "version": "1.5.6",
       "date": "2025-11-26",
       "type": "patch",
       "changes": [
-        "--commit"
+        "Fixed TypeScript error in theme comparison (ColorScheme vs 'system')",
+        "Resolved handleClick undefined error in VideoBackground component",
+        "Optimized video/unicorn background sizing to match Vitruvian man proportions",
+        "Adjusted background positioning and reduced size to 10% of original",
+        "Maintained perfect circular shape with responsive dimensions"
       ]
     },
     "history": [
       {
-        "version": "1.5.4",
+        "version": "1.5.5",
         "date": "2025-11-26",
         "type": "patch",
         "changes": [
@@ -103,12 +107,12 @@
   "semver": {
     "major": 1,
     "minor": 5,
-    "patch": 5,
+    "patch": 6,
     "prerelease": null,
     "build": null
   },
   "metadata": {
-    "lastModified": "2025-11-26T20:39:45.992Z",
+    "lastModified": "2025-11-26T21:03:45.992Z",
     "commitHash": "initial",
     "branch": "main",
     "author": "HUMΛN-Ø Team"

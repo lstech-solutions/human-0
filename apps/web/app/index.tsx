@@ -213,7 +213,7 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const useThreeJS = false; // keep Vitruvian CSS as the only active layer
-  const { colorScheme } = useTheme();
+  const { colorScheme, theme } = useTheme();
   const APP_VERSION = appPkg.version || "0.0.0";
   const [frameRate, setFrameRate] = useState(60);
   const lastPointer = useRef<{ x: number; y: number; t: number } | null>(null);
@@ -553,19 +553,20 @@ export default function Home() {
     return (
       <div className="fixed inset-0 w-full h-full vitruvian-container z-10">
         <div className="vitruvian-wrapper" style={wrapperStyle}>
-          {colorScheme === 'system' ? (
+          {theme === 'system' ? (
             <VideoBackground 
-              videoSrc="/unicorn.webm"
+              videoSrc="/videos/unicorn-1764193723316.webm"
               style={{
                 position: 'absolute',
-                top: '45%',
+                top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: isDesktop ? '1019px' : '373px',
-                height: isDesktop ? '1019px' : '373px',
+                width: isDesktop ? '60px' : '22px',
+                height: isDesktop ? '60px' : '22px',
                 borderRadius: '50%',
                 overflow: 'hidden',
-                zIndex: 1
+                zIndex: 1,
+                objectFit: 'cover'
               }}
             />
           ) : (
@@ -573,14 +574,15 @@ export default function Home() {
               projectId="pcwpMXrVA277X9qCtD3I"
               style={{
                 position: 'absolute',
-                top: '45%',
+                top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: isDesktop ? '1019px' : '373px',
-                height: isDesktop ? '1019px' : '373px',
+                width: isDesktop ? '60px' : '22px',
+                height: isDesktop ? '60px' : '22px',
                 borderRadius: '50%',
                 overflow: 'hidden',
-                zIndex: 1
+                zIndex: 1,
+                objectFit: 'cover'
               }}
             />
           )}

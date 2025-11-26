@@ -30,6 +30,11 @@ const VideoBackground: React.FC<VideoBackgroundProps> = ({
     if (!video) return;
 
     // Ensure video plays automatically
+    const handleClick = () => {
+      video.play().catch(console.error);
+      document.removeEventListener('click', handleClick);
+    };
+
     const playVideo = async () => {
       try {
         if (video.paused) {
@@ -38,10 +43,6 @@ const VideoBackground: React.FC<VideoBackgroundProps> = ({
       } catch (error) {
         console.log('Video autoplay prevented:', error);
         // Add click handler for user interaction fallback
-        const handleClick = () => {
-          video.play().catch(console.error);
-          document.removeEventListener('click', handleClick);
-        };
         document.addEventListener('click', handleClick);
       }
     };
