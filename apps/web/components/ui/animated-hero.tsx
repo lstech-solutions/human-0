@@ -84,7 +84,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
       const blendMode = "normal";
       const clampedOpacity = isDark ? Math.max(0.65, opacity) : Math.max(0.45, opacity);
 
-      particle.textContent = Math.random() > 0.5 ? "0" : "1";
+      particle.textContent = Math.random() > 0.5 ? "Ø" : "1";
       particle.style.cssText = `
         width: 0.6rem;
         height: 0.6rem;
@@ -177,7 +177,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
     const interval = setInterval(() => {
       particlesRef.current.forEach((particle) => {
         if (Math.random() > 0.5) {
-          particle.textContent = Math.random() > 0.5 ? "0" : "1";
+          particle.textContent = Math.random() > 0.5 ? "Ø" : "1";
         }
       });
     }, 700);
