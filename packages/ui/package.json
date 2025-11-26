@@ -4,6 +4,6 @@
   "private": true,
   "main": "index.tsx",
   "dependencies": {
-    "react": "latest"
+    "react": "19.1.0"
   }
 }
