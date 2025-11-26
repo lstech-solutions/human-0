@@ -4,14 +4,26 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import FlickeringGrid from '../components/FlickeringGrid';
 import { H1, Body } from '../components/typography';
 import { ParticleHero } from '../components/ui/animated-hero';
+import VideoBackground from '../components/ui/video-background';
 import UnicornStudioBackground from '../components/ui/unicorn-studio-background';
 import appPkg from '../package.json';
 import { useTheme } from '../theme/ThemeProvider';
 
+// TypeScript declarations for UnicornStudio
+declare global {
+  interface Window {
+    UnicornStudio?: {
+      isInitialized?: boolean;
+      init: () => Promise<any>;
+      destroy: () => void;
+    };
+  }
+}
+
 // Atomic Orbital System Component
 const AtomicOrbital: React.FC<{ colorScheme: "light" | "dark" }> = ({ colorScheme }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number | null>(null);
+  const canvasRef = useRef(null);
+  const animationRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -541,20 +553,37 @@ export default function Home() {
     return (
       <div className="fixed inset-0 w-full h-full vitruvian-container z-10">
         <div className="vitruvian-wrapper" style={wrapperStyle}>
-          <UnicornStudioBackground 
-            projectId="pcwpMXrVA277X9qCtD3I" 
-            style={{
-              position: 'absolute',
-              top: '45%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: isDesktop ? '1019px' : '373px',
-              height: isDesktop ? '1019px' : '373px',
-              borderRadius: '50%',
-              overflow: 'hidden',
-              zIndex: 1
-            }}
-          />
+          {colorScheme === 'system' ? (
+            <VideoBackground 
+              videoSrc="/unicorn.webm"
+              style={{
+                position: 'absolute',
+                top: '45%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: isDesktop ? '1019px' : '373px',
+                height: isDesktop ? '1019px' : '373px',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                zIndex: 1
+              }}
+            />
+          ) : (
+            <UnicornStudioBackground 
+              projectId="pcwpMXrVA277X9qCtD3I"
+              style={{
+                position: 'absolute',
+                top: '45%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: isDesktop ? '1019px' : '373px',
+                height: isDesktop ? '1019px' : '373px',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                zIndex: 1
+              }}
+            />
+          )}
           <div className="absolute inset-0 flex items-center justify-center">
             {orbitConfig.map((cfg, idx) => renderOrbitRing(cfg, idx))}
             {renderElectrons()}
