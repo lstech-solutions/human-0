@@ -9,7 +9,40 @@ importers:
         specifier: latest
         version: link:node_modules/turbo
   apps/docs:
-    specifiers: {}
+    devDependencies:
+      '@docusaurus/core':
+        specifier: 3.9.2
+        version: 3.9.2
+      '@docusaurus/module-type-aliases':
+        specifier: 3.9.2
+        version: 3.9.2
+      '@docusaurus/preset-classic':
+        specifier: 3.9.2
+        version: 3.9.2
+      '@docusaurus/tsconfig':
+        specifier: 3.9.2
+        version: 3.9.2
+      '@docusaurus/types':
+        specifier: 3.9.2
+        version: 3.9.2
+      '@mdx-js/react':
+        specifier: ^3.0.0
+        version: ^3.0.0
+      clsx:
+        specifier: ^2.0.0
+        version: ^2.0.0
+      prism-react-renderer:
+        specifier: ^2.3.0
+        version: ^2.3.0
+      react:
+        specifier: 19.1.0
+        version: 19.1.0
+      react-dom:
+        specifier: 19.1.0
+        version: 19.1.0
+      typescript:
+        specifier: ~5.6.2
+        version: ~5.6.2
   apps/web:
     specifiers: {}
   packages/config:
