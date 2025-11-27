@@ -5,209 +5,9 @@ import FlickeringGrid from '../components/FlickeringGrid';
 import { H1, Body } from '../components/typography';
 import { ParticleHero } from '../components/ui/animated-hero';
 import VideoBackground from '../components/ui/video-background';
-import UnicornStudioBackground from '../components/ui/unicorn-studio-background';
 import appPkg from '../package.json';
 import { useTheme } from '../theme/ThemeProvider';
 
-// TypeScript declarations for UnicornStudio
-declare global {
-  interface Window {
-    UnicornStudio?: {
-      isInitialized?: boolean;
-      init: () => Promise<any>;
-      destroy: () => void;
-    };
-  }
-}
-
-// Atomic Orbital System Component
-const AtomicOrbital: React.FC<{ colorScheme: "light" | "dark" }> = ({ colorScheme }) => {
-  const canvasRef = useRef(null);
-  const animationRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    // Initialize Three.js scene
-    const scene = new (window as any).THREE.Scene();
-    scene.background = new (window as any).THREE.Color('#000');
-
-    const camera = new (window as any).THREE.PerspectiveCamera(
-      70,
-      window.innerWidth / window.innerHeight,
-      0.01,
-      100
-    );
-    camera.position.z = 5;
-    
-    const renderer = new (window as any).THREE.WebGLRenderer({ 
-      canvas: canvas,
-      alpha: true,
-      antialias: true 
-    });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-
-    // Soft lighting
-    const light = new (window as any).THREE.PointLight(0xffffff, 1);
-    light.position.set(5, 5, 5);
-    scene.add(light);
-
-    // ELECTRONS + ORBITS (no nucleus - centered on Vitruvian man)
-    const electrons: any[] = [];
-
-    const palette =
-      colorScheme === "dark"
-        ? { primary: "#22c55e", secondary: "#16a34a" }
-        : { primary: "#0f172a", secondary: "#111827" };
-
-    const electronMaterial = new (window as any).THREE.MeshBasicMaterial({
-      color: palette.primary,
-    });
-
-    function createElectron(radius: number, axis: string) {
-      const electron = new (window as any).THREE.Mesh(
-        new (window as any).THREE.SphereGeometry(0.12, 16, 16),
-        electronMaterial
-      );
-      electron.userData = { radius, axis, angle: 0 };
-      scene.add(electron);
-      electrons.push(electron);
-    }
-
-    // 2 electrons on different orbital axes
-    createElectron(2, 'xz');  // orbit 1
-    createElectron(2, 'yz');  // orbit 2
-
-    // Orbit visualization (dots instead of lines)
-    function createOrbitDots(color: string, x: number, y: number, z: number, dotCount: number = 50) {
-      const dots: any[] = [];
-      for (let i = 0; i < dotCount; i++) {
-        const angle = (i / dotCount) * Math.PI * 2;
-        const dotGeometry = new (window as any).THREE.SphereGeometry(0.02, 8, 8);
-        const dotMaterial = new (window as any).THREE.MeshBasicMaterial({ 
-          color,
-          transparent: true,
-          opacity: 0.6
-        });
-        const dot = new (window as any).THREE.Mesh(dotGeometry, dotMaterial);
-        
-        // Create perfect circle orbit (equal radius)
-        const radius = 2;
-        dot.position.set(
-          Math.cos(angle) * radius,
-          Math.sin(angle) * radius,
-          0
-        );
-        
-        dot.userData = { 
-          originalAngle: angle,
-          radius,
-          orbitRotation: { x, y, z }
-        };
-        
-        dots.push(dot);
-        scene.add(dot);
-      }
-      return dots;
-    }
-
-    // Create 2 orbital dot rings with perfect circles
-    const orbit1Dots = createOrbitDots(palette.primary, 0, Math.PI / 3, Math.PI / 6, 40);
-    const orbit2Dots = createOrbitDots(palette.secondary, Math.PI / 4, 0, Math.PI / 3, 35);
-
-    // Animation loop
-    const animate = () => {
-      animationRef.current = requestAnimationFrame(animate);
-
-      // Animate electrons
-      electrons.forEach((e: any, i: number) => {
-        e.userData.angle += 0.02 + i * 0.01;
-        const a = e.userData.angle;
-        const r = e.userData.radius;
-
-        switch (e.userData.axis) {
-          case 'xz':
-            e.position.set(Math.cos(a) * r, 0, Math.sin(a) * r);
-            break;
-          case 'yz':
-            e.position.set(0, Math.cos(a) * r, Math.sin(a) * r);
-            break;
-        }
-      });
-
-      // Animate orbital dots with 3D parallax rotation
-      const time = Date.now() * 0.001;
-      
-      // Animate orbit 1 dots with parallax
-      orbit1Dots.forEach((dot: any, i: number) => {
-        const userData = dot.userData;
-        const angle = userData.originalAngle + time * 0.5;
-        const parallaxFactor = Math.sin(time * 2 + i * 0.1) * 0.2;
-        
-        dot.position.x = Math.cos(angle) * userData.radius * (1 + parallaxFactor);
-        dot.position.y = Math.sin(angle) * userData.radius * (1 + parallaxFactor * 0.5);
-        dot.position.z = Math.sin(time * 3 + i * 0.2) * 0.3;
-        
-        // Apply orbit rotation for 3D effect
-        dot.rotation.x = userData.orbitRotation.x + Math.sin(time) * 0.1;
-        dot.rotation.y = userData.orbitRotation.y + Math.cos(time) * 0.1;
-        dot.rotation.z = userData.orbitRotation.z + Math.sin(time * 1.5) * 0.1;
-        
-        // Pulsing opacity
-        dot.material.opacity = 0.3 + Math.sin(time * 4 + i * 0.2) * 0.3;
-      });
-
-      // Animate orbit 2 dots with different parallax
-      orbit2Dots.forEach((dot: any, i: number) => {
-        const userData = dot.userData;
-        const angle = userData.originalAngle - time * 0.7; // Counter-rotation
-        const parallaxFactor = Math.cos(time * 2.5 + i * 0.15) * 0.25;
-        
-        dot.position.x = Math.cos(angle) * userData.radius * (1 + parallaxFactor);
-        dot.position.y = Math.sin(angle) * userData.radius * (1 + parallaxFactor * 0.7);
-        dot.position.z = Math.cos(time * 2 + i * 0.25) * 0.4;
-        
-        // Apply orbit rotation for 3D effect
-        dot.rotation.x = userData.orbitRotation.x + Math.cos(time * 1.2) * 0.15;
-        dot.rotation.y = userData.orbitRotation.y + Math.sin(time * 1.2) * 0.15;
-        dot.rotation.z = userData.orbitRotation.z + Math.cos(time * 1.8) * 0.15;
-        
-        // Pulsing opacity
-        dot.material.opacity = 0.4 + Math.cos(time * 3.5 + i * 0.3) * 0.4;
-      });
-
-      renderer.render(scene, camera);
-    };
-
-    animate();
-
-    // Handle resize
-    const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      renderer.dispose();
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 w-full h-full"
-      style={{ width: '100%', height: '100%' }}
-    />
-  );
-};
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -455,13 +255,13 @@ export default function Home() {
 
   const orbitConfig = isDesktop
     ? [
-        { dots: 180, a: baseA, b: baseB * 0.8, color: orbitPalette.primary, opacityBase: 0.98, opacityStep: 0.03, modulo: 8, size: containerSize, duration: 10.4, reverse: false, dotSize: 3 },
-        { dots: 150, a: baseA, b: baseB * 0.8, color: orbitPalette.secondary, opacityBase: 0.95, opacityStep: 0.04, modulo: 7, size: containerSize, duration: 13, reverse: true, dotSize: 3 },
-      ]
+      { dots: 180, a: baseA, b: baseB * 0.8, color: orbitPalette.primary, opacityBase: 0.98, opacityStep: 0.03, modulo: 8, size: containerSize, duration: 10.4, reverse: false, dotSize: 3 },
+      { dots: 150, a: baseA, b: baseB * 0.8, color: orbitPalette.secondary, opacityBase: 0.95, opacityStep: 0.04, modulo: 7, size: containerSize, duration: 13, reverse: true, dotSize: 3 },
+    ]
     : [
-        { dots: 90, a: baseA, b: baseB * 0.8, color: orbitPalette.primary, opacityBase: 0.98, opacityStep: 0.03, modulo: 8, size: containerSize, duration: 8, reverse: false, dotSize: 1.5 },
-        { dots: 75, a: baseA, b: baseB * 0.8, color: orbitPalette.secondary, opacityBase: 0.95, opacityStep: 0.04, modulo: 7, size: containerSize, duration: 10, reverse: true, dotSize: 1.5 },
-      ];
+      { dots: 90, a: baseA, b: baseB * 0.8, color: orbitPalette.primary, opacityBase: 0.98, opacityStep: 0.03, modulo: 8, size: containerSize, duration: 8, reverse: false, dotSize: 1.5 },
+      { dots: 75, a: baseA, b: baseB * 0.8, color: orbitPalette.secondary, opacityBase: 0.95, opacityStep: 0.04, modulo: 7, size: containerSize, duration: 10, reverse: true, dotSize: 1.5 },
+    ];
 
   const renderOrbitRing = (cfg: (typeof orbitConfig)[number], key: number) => (
     <div
@@ -513,7 +313,7 @@ export default function Home() {
       return (
         <div
           key={axis}
-            className="absolute rounded-full"
+          className="absolute rounded-full"
           style={{
             left: '50%',
             top: '50%',
@@ -542,50 +342,33 @@ export default function Home() {
     const wrapperStyle = isDesktop
       ? undefined
       : {
-          width: '320px',
-          height: '320px',
-          right: 'auto',
-          left: '78%',
-          top: '64%',
-          transform: 'translate(-50%, -50%)',
-        };
+        width: '320px',
+        height: '320px',
+        right: 'auto',
+        left: '78%',
+        top: '64%',
+        transform: 'translate(-50%, -50%)',
+      };
 
     return (
       <div className="fixed inset-0 w-full h-full vitruvian-container z-10">
         <div className="vitruvian-wrapper" style={wrapperStyle}>
-          {theme === 'system' ? (
-            <VideoBackground 
-              videoSrc="/videos/unicorn-1764193723316.webm"
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: isDesktop ? '60px' : '22px',
-                height: isDesktop ? '60px' : '22px',
-                borderRadius: '50%',
-                overflow: 'hidden',
-                zIndex: 1,
-                objectFit: 'cover'
-              }}
-            />
-          ) : (
-            <UnicornStudioBackground 
-              projectId="pcwpMXrVA277X9qCtD3I"
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: isDesktop ? '60px' : '22px',
-                height: isDesktop ? '60px' : '22px',
-                borderRadius: '50%',
-                overflow: 'hidden',
-                zIndex: 1,
-                objectFit: 'cover'
-              }}
-            />
-          )}
+          <VideoBackground
+            videoSrc="/videos/unicorn-1764193723316.webm"
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: isDesktop ? '60px' : '22px',
+              height: isDesktop ? '60px' : '22px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              zIndex: 1,
+              objectFit: 'cover'
+            }}
+          />
+
           <div className="absolute inset-0 flex items-center justify-center">
             {orbitConfig.map((cfg, idx) => renderOrbitRing(cfg, idx))}
             {renderElectrons()}
@@ -619,7 +402,7 @@ export default function Home() {
     <main className="relative min-h-screen overflow-hidden bg-human-bg-light dark:bg-human-bg-dark">
       {/* Global background dots */}
       <FlickeringGrid
-      className="absolute inset-0 pointer-events-none opacity-25 mix-blend-screen"
+        className="absolute inset-0 pointer-events-none opacity-25 mix-blend-screen"
         color={gridColor}
         maxOpacity={0.08}
       />
@@ -640,7 +423,7 @@ export default function Home() {
 
       {renderVitruvian()}
 
-      
+
       {/* Corner Frame Accents */}
       <div className="absolute top-0 left-0 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-l-2 border-white/30 z-20"></div>
       <div className="absolute top-0 right-0 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-r-2 border-white/30 z-20"></div>
@@ -659,12 +442,13 @@ export default function Home() {
 
             <div className="relative">
               <div className="hidden lg:block absolute -left-3 top-0 bottom-0 w-1 dither-pattern opacity-40"></div>
+
               <H1 className="mb-3 lg:mb-4 tracking-widest leading-tight">
                 <span className="bg-gradient-to-r from-emerald-300 via-emerald-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(0,255,156,0.25)]">
                   PROOF OF
                 </span>
                 <span className="block mt-1 lg:mt-2 bg-gradient-to-r from-cyan-300 via-emerald-400 to-emerald-200 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(0,255,156,0.25)]">
-                  SUSTAINABLE HUMANITY ON BLOCKCHAIN
+                  SUSTAINABLE HUMANITY
                 </span>
               </H1>
             </div>
@@ -679,14 +463,14 @@ export default function Home() {
               <Body className="text-xs lg:text-base mb-5 lg:mb-6 leading-relaxed text-human-text-light/90 dark:text-human-text-dark/90">
                 Where environmental impact meets digital transparency — Carbon neutrality through Web3 innovation
               </Body>
-              
+
               <div className="hidden lg:block absolute -right-4 top-1/2 w-3 h-3 border border-white opacity-30" style={{ transform: 'translateY(-50%)' }}>
                 <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-human-text-light dark:bg-human-text-dark" style={{ transform: 'translate(-50%, -50%)' }}></div>
               </div>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-3 lg:gap-4">
-              <button 
+              <button
                 onClick={() => window.location.href = '/canvas'}
                 className="relative px-5 lg:px-6 py-2 lg:py-2.5 bg-transparent text-human-text-light dark:text-human-text-dark font-mono text-xs lg:text-sm border border-human-border hover:bg-human-text-light hover:text-black transition-all duration-200 group"
               >
@@ -694,10 +478,10 @@ export default function Home() {
                 <span className="hidden lg:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-human-border opacity-0 group-hover:opacity-100 transition-opacity"></span>
                 EXPLORE CANVAS
               </button>
-              
-              <button 
+
+              <button
                 onClick={() => window.location.href = '/pdf-download'}
-                className="relative px-5 lg:px-6 py-2 lg:py-2.5 bg-transparent border border-human-border text-human-text-light dark:text-human-text-dark font-mono text-xs lg:text-sm hover:bg-human-text-light hover:text-black transition-all duration-200" 
+                className="relative px-5 lg:px-6 py-2 lg:py-2.5 bg-transparent border border-human-border text-human-text-light dark:text-human-text-dark font-mono text-xs lg:text-sm hover:bg-human-text-light hover:text-black transition-all duration-200"
                 style={{ borderWidth: '1px' }}
               >
                 DOWNLOAD PDF
@@ -719,21 +503,21 @@ export default function Home() {
           <div className="flex items-center gap-3 lg:gap-6">
             <span className="hidden lg:inline">SYSTEM.ACTIVE</span>
             <span className="lg:hidden">SYS.ACT</span>
-          <div className="hidden lg:flex gap-1">
-            {meterBaseHeights.map((base, i) => {
-              const height = base + (meterOffsets[i] || 0);
-              return (
-                <div
-                  key={i}
-                  className="w-1 bg-human-text-light/50 dark:bg-white/30"
-                  style={{ height: `${height}px`, minHeight: `${base - 3}px`, maxHeight: `${base + 3}px`, transition: "height 120ms ease-out" }}
-                ></div>
-              );
-            })}
-          </div>
+            <div className="hidden lg:flex gap-1">
+              {meterBaseHeights.map((base, i) => {
+                const height = base + (meterOffsets[i] || 0);
+                return (
+                  <div
+                    key={i}
+                    className="w-1 bg-human-text-light/50 dark:bg-white/30"
+                    style={{ height: `${height}px`, minHeight: `${base - 3}px`, maxHeight: `${base + 3}px`, transition: "height 120ms ease-out" }}
+                  ></div>
+                );
+              })}
+            </div>
             <span>v{APP_VERSION}</span>
           </div>
-          
+
           <div className="flex items-center gap-2 lg:gap-4">
             <span className="hidden lg:inline">◐ RENDERING</span>
             <div className="flex gap-1">
