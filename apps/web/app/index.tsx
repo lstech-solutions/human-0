@@ -356,7 +356,7 @@ export default function Home() {
             style={{
               position: 'absolute',
               top: '50%',
-              left: '50%',
+              left: '49.6%',
               transform: 'translate(-50%, -50%)',
               width: isDesktop ? '60px' : '22px',
               height: isDesktop ? '60px' : '22px',
