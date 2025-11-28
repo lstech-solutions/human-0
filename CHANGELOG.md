@@ -2,7 +2,20 @@
 
 ## 📋 Version History
 
-### 🔧 Version 1.7.2 **[CURRENT]**
+### 🔧 Version 1.7.3 **[CURRENT]**
+**Date:** 2025-11-28  
+**Type:** patch
+
+**Changes:**
+- Fixed lambda proxy configuration
+- Version management enhancements
+- Configuration updates
+- Documentation updates
+
+
+### 📚 Previous Versions
+
+### 🔧 Version 1.7.2
 **Date:** 2025-11-28  
 **Type:** patch
 
@@ -20,7 +33,7 @@
 - Updated version.json
 
 
-### 📚 Previous Versions
+---
 
 ### 🔧 Version 1.7.1
 **Date:** 2025-11-28  

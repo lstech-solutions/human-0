@@ -1,28 +1,39 @@
 {
   "name": "human-zero",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "description": "HUMΛN-Ø - Sustainable impact through Web3 technology",
-  "build": "20251128170315",
+  "build": "20251128170903",
   "changelog": {
     "current": {
-      "version": "1.7.2",
+      "version": "1.7.3",
       "date": "2025-11-28",
       "type": "patch",
       "changes": [
-        "Updated .turbo/cache/df487ca050a9f45d-meta.json",
-        "Updated .turbo/cache/df487ca050a9f45d.tar.zst",
-        "Updated .turbo/cookies/106.cookie",
-        "Documentation updates",
-        "Updated apps/docs/.turbo/turbo-build.log",
-        "Dependency updates",
-        "Updated apps/web/version.json",
-        "Updated lambda function: index.js",
-        "Updated lambda function: package.json",
-        "Version management improvements",
-        "Updated version.json"
+        "Fixed lambda proxy configuration",
+        "Version management enhancements",
+        "Configuration updates",
+        "Documentation updates"
       ]
     },
     "history": [
+      {
+        "version": "1.7.2",
+        "date": "2025-11-28",
+        "type": "patch",
+        "changes": [
+          "Updated .turbo/cache/df487ca050a9f45d-meta.json",
+          "Updated .turbo/cache/df487ca050a9f45d.tar.zst",
+          "Updated .turbo/cookies/106.cookie",
+          "Documentation updates",
+          "Updated apps/docs/.turbo/turbo-build.log",
+          "Dependency updates",
+          "Updated apps/web/version.json",
+          "Updated lambda function: index.js",
+          "Updated lambda function: package.json",
+          "Version management improvements",
+          "Updated version.json"
+        ]
+      },
       {
         "version": "1.7.1",
         "date": "2025-11-28",
@@ -365,12 +376,12 @@
   "semver": {
     "major": 1,
     "minor": 7,
-    "patch": 2,
+    "patch": 3,
     "prerelease": null,
     "build": null
   },
   "metadata": {
-    "lastModified": "2025-11-28T17:03:15.901Z",
+    "lastModified": "2025-11-28T17:09:03.857Z",
     "commitHash": "initial",
     "branch": "main",
     "author": "HUMΛN-Ø Team"

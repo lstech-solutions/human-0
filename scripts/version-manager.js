@@ -154,30 +154,50 @@ class VersionManager {
       const changedFiles = output.trim().split('\n').filter(f => f.length > 0);
       
       const changes = [];
+      let hasLambdaChanges = false;
+      let hasUIChanges = false;
+      let hasAPIChanges = false;
+      let hasVersionChanges = false;
+      let hasConfigChanges = false;
+      let hasDocsChanges = false;
       
-      // Analyze changed files and generate descriptions
+      // Analyze changed files and categorize
       changedFiles.forEach(file => {
+        // Skip cache and temporary files
+        if (file.includes('.turbo/') || file.includes('node_modules/') || file.includes('.git/') || 
+            file.includes('.cache') || file.includes('dist/') || file.includes('build/')) {
+          return;
+        }
+        
         if (file.includes('lambda/')) {
-          changes.push(`Updated lambda function: ${file.split('/').pop()}`);
+          hasLambdaChanges = true;
         } else if (file.includes('apps/web/') && file.includes('.tsx')) {
-          changes.push(`UI component updates`);
+          hasUIChanges = true;
         } else if (file.includes('apps/web/') && file.includes('.ts')) {
-          changes.push(`Backend API updates`);
-        } else if (file.includes('package.json')) {
-          changes.push(`Dependency updates`);
-        } else if (file.includes('version-manager.js')) {
-          changes.push(`Version management improvements`);
+          hasAPIChanges = true;
+        } else if (file.includes('version-manager.js') || file.includes('version.json')) {
+          hasVersionChanges = true;
         } else if (file.includes('README.md') || file.includes('CHANGELOG.md')) {
-          changes.push(`Documentation updates`);
-        } else if (file.includes('.config.') || file.includes('turbo.json')) {
-          changes.push(`Build configuration updates`);
-        } else {
-          changes.push(`Updated ${file}`);
+          hasDocsChanges = true;
+        } else if (file.includes('.config.') || file.includes('turbo.json') || file.includes('package.json')) {
+          hasConfigChanges = true;
         }
       });
       
-      // Remove duplicates and return
-      return [...new Set(changes)];
+      // Generate concise change descriptions
+      if (hasLambdaChanges) changes.push('Fixed lambda proxy configuration');
+      if (hasUIChanges) changes.push('UI component improvements');
+      if (hasAPIChanges) changes.push('API endpoint updates');
+      if (hasVersionChanges) changes.push('Version management enhancements');
+      if (hasConfigChanges) changes.push('Configuration updates');
+      if (hasDocsChanges) changes.push('Documentation updates');
+      
+      // If no categorized changes, provide generic description
+      if (changes.length === 0 && changedFiles.length > 0) {
+        changes.push('Code improvements and fixes');
+      }
+      
+      return changes.length > 0 ? changes : [`Version ${this.versionData.version} release`];
       
     } catch (error) {
       // Fallback to generic message
@@ -288,13 +308,30 @@ class VersionManager {
       // Add all changes to git
       execSync('git add .', { stdio: 'inherit' });
       
-      // Generate commit message with detected changes
-      let commitMessage = message || `chore: bump version to ${this.versionData.version}`;
+      // Generate conventional commit message
+      let commitMessage;
       
-      // Always append detected changes for better tracking
+      if (message) {
+        commitMessage = message;
+      } else {
+        // Use conventional commit format
+        const versionType = this.versionData.changelog.current?.type || 'patch';
+        let scope = 'release';
+        
+        // Determine scope based on changes
+        if (detectedChanges.some(c => c.includes('lambda'))) scope = 'lambda';
+        else if (detectedChanges.some(c => c.includes('UI'))) scope = 'ui';
+        else if (detectedChanges.some(c => c.includes('API'))) scope = 'api';
+        else if (detectedChanges.some(c => c.includes('Version'))) scope = 'build';
+        
+        const type = versionType === 'major' ? 'feat!' : versionType === 'minor' ? 'feat' : 'fix';
+        commitMessage = `${type}(${scope}): release v${this.versionData.version}`;
+      }
+      
+      // Append detected changes for better tracking
       if (detectedChanges.length > 0) {
         const changesList = detectedChanges.map(change => `- ${change}`).join('\n');
-        commitMessage += `\n\nChanges:\n${changesList}`;
+        commitMessage += `\n\n${changesList}`;
       }
       
       // Commit with version info
