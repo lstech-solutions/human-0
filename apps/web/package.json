@@ -1,7 +1,7 @@
 {
   "name": "@human-0/web",
   "main": "expo-router/entry",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -9,6 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build": "expo export -p web",
+    "build:pwa": "expo export -p web && npx @serwist/cli inject-manifest",
     "test": "jest --watchAll",
     "lint": "eslint \"app/**/*.{js,jsx,ts,tsx}\""
   },
@@ -16,8 +17,8 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@human-0/i18n": "workspace:*",
     "@expo/vector-icons": "^15.0.3",
+    "@human-0/i18n": "workspace:*",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "autoprefixer": "^10.4.20",
@@ -51,15 +52,17 @@
     "react-native-web": "^0.21.0",
     "react-native-webview": "13.15.0",
     "react-native-worklets": "0.5.1",
+    "serwist": "^9.2.3",
     "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@serwist/cli": "^9.2.3",
     "@types/jest": "^29.5.12",
     "@types/react": "~19.1.10",
     "@types/react-test-renderer": "^18.3.0",
-    "@typescript-eslint/parser": "^8.18.2",
     "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
     "eslint": "^8.57.0",
     "eslint-config-expo": "~10.0.0",
     "jest": "^29.2.1",

@@ -1,9 +1,10 @@
 {
   "name": "human-0-monorepo",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:pwa": "pnpm --filter @human-0/web build:pwa",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "test": "turbo run test",
