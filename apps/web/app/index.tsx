@@ -7,6 +7,7 @@ import { ParticleHero } from '../components/ui/animated-hero';
 import VideoBackground from '../components/ui/video-background';
 import appPkg from '../package.json';
 import { useTheme } from '../theme/ThemeProvider';
+import { MagnetizeButton } from '../components/ui/MagnetizeButton';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -307,11 +308,12 @@ export default function Home() {
       const orbitRadius = baseA;
       const size = isDesktop ? 12 : 8;
       const duration = isDesktop ? '8s' : '6s';
+      const glyph = idx === 0 ? '1' : 'Ø';
 
       return (
         <div
           key={axis}
-          className="absolute rounded-full"
+          className="absolute rounded-full flex items-center justify-center"
           style={{
             left: '50%',
             top: '50%',
@@ -323,7 +325,14 @@ export default function Home() {
             animation: `orbit-${axis} ${duration} linear infinite`,
             ['--orbit-radius' as any]: `${orbitRadius}px`,
           }}
-        />
+        >
+          <span
+            className="text-[8px] font-mono text-white select-none"
+            style={{ lineHeight: 1 }}
+          >
+            {glyph}
+          </span>
+        </div>
       );
     });
 
@@ -441,7 +450,7 @@ export default function Home() {
             <div className="relative">
               <div className="hidden lg:block absolute -left-3 top-0 bottom-0 w-1 dither-pattern opacity-40"></div>
 
-              <H1 className="mb-3 lg:mb-4 tracking-widest leading-tight">
+              <H1 className="mb-3 lg:mb-4 tracking-widest leading-tight font-digitaldivine">
                 <span className="bg-gradient-to-r from-emerald-300 via-emerald-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(0,255,156,0.25)]">
                   PROOF OF
                 </span>
@@ -468,22 +477,22 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col lg:flex-row gap-3 lg:gap-4">
-              <button
+              <MagnetizeButton
                 onClick={() => window.location.href = '/canvas'}
-                className="relative px-5 lg:px-6 py-2 lg:py-2.5 bg-transparent text-human-text-light dark:text-human-text-dark font-mono text-xs lg:text-sm border border-human-border hover:bg-human-text-light hover:text-black transition-all duration-200 group"
+                className="px-5 lg:px-6 py-2 lg:py-2.5 bg-white/85 dark:bg-transparent text-human-text-light dark:text-human-text-dark font-mono text-xs lg:text-sm border border-human-border/80 dark:border-human-border hover:text-white dark:hover:text-white transition-all duration-200 group magnet-btn-gradient"
               >
                 <span className="hidden lg:block absolute -top-1 -left-1 w-2 h-2 border-t border-l border-human-border opacity-0 group-hover:opacity-100 transition-opacity"></span>
                 <span className="hidden lg:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-human-border opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                EXPLORE CANVAS
-              </button>
+                <span>EXPLORE CANVAS</span>
+              </MagnetizeButton>
 
-              <button
+              <MagnetizeButton
                 onClick={() => window.location.href = '/pdf-download'}
-                className="relative px-5 lg:px-6 py-2 lg:py-2.5 bg-transparent border border-human-border text-human-text-light dark:text-human-text-dark font-mono text-xs lg:text-sm hover:bg-human-text-light hover:text-black transition-all duration-200"
+                className="px-5 lg:px-6 py-2 lg:py-2.5 bg-white/85 dark:bg-transparent border border-human-border/80 dark:border-human-border text-human-text-light dark:text-human-text-dark font-mono text-xs lg:text-sm hover:text-white dark:hover:text-white transition-all duration-200 magnet-btn-gradient"
                 style={{ borderWidth: '1px' }}
               >
-                DOWNLOAD PDF
-              </button>
+                <span>DOWNLOAD PDF</span>
+              </MagnetizeButton>
             </div>
 
             <div className="hidden lg:flex items-center gap-2 mt-6 opacity-40">

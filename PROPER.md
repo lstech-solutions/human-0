@@ -2,8 +2,8 @@
 
 ## 📋 Version History
 
-### 🔧 Version 1.5.7 **[CURRENT]**
-**Date:** 2025-11-27  
+### 🔧 Version 1.5.8 **[CURRENT]**
+**Date:** 2025-11-28  
 **Type:** patch
 
 **Changes:**
@@ -11,6 +11,16 @@
 
 
 ### 📚 Previous Versions
+
+### 🔧 Version 1.5.7
+**Date:** 2025-11-27  
+**Type:** patch
+
+**Changes:**
+- --commit
+
+
+---
 
 ### 🔧 Version 1.5.6
 **Date:** 2025-11-26  

@@ -9,7 +9,7 @@ export const H1 = (props: TextProps) => (
   <Text
     {...props}
     className={mergeClassName(
-      "text-3xl font-space-semibold text-human-text-light dark:text-human-text-dark",
+      "text-3xl font-heading font-bold text-human-text-light dark:text-human-text-dark",
       (props as any).className,
     )}
   />

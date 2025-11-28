@@ -33,6 +33,8 @@ module.exports = {
         space: ["spacegrotesk-regular", "System"],
         "space-semibold": ["spacegrotesk-semibold", "System"],
         inter: ["inter-regular", "System"],
+        digitaldivine: ["DigitalDivine", "System"],
+        heading: ["Segoe UI Symbol", "system-ui", "sans-serif"],
       },
       borderRadius: {
         xl: 16,
