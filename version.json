@@ -1,18 +1,26 @@
 {
   "name": "human-zero",
-  "version": "1.5.12",
+  "version": "1.5.13",
   "description": "HUMΛN-Ø - Sustainable impact through Web3 technology",
-  "build": "20251128062741",
+  "build": "20251128065044",
   "changelog": {
     "current": {
-      "version": "1.5.12",
+      "version": "1.5.13",
       "date": "2025-11-28",
       "type": "patch",
       "changes": [
-        "UI: BMC grid layout refinements & PDF button contrast"
+        "Version 1.5.13 release"
       ]
     },
     "history": [
+      {
+        "version": "1.5.12",
+        "date": "2025-11-28",
+        "type": "patch",
+        "changes": [
+          "UI: BMC grid layout refinements & PDF button contrast"
+        ]
+      },
       {
         "version": "1.5.11",
         "date": "2025-11-28",
@@ -155,12 +163,12 @@
   "semver": {
     "major": 1,
     "minor": 5,
-    "patch": 12,
+    "patch": 13,
     "prerelease": null,
     "build": null
   },
   "metadata": {
-    "lastModified": "2025-11-28T06:27:41.985Z",
+    "lastModified": "2025-11-28T06:50:44.349Z",
     "commitHash": "initial",
     "branch": "main",
     "author": "HUMΛN-Ø Team"

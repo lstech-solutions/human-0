@@ -2,7 +2,17 @@
 
 ## 📋 Version History
 
-### 🔧 Version 1.5.12 **[CURRENT]**
+### 🔧 Version 1.5.13 **[CURRENT]**
+**Date:** 2025-11-28  
+**Type:** patch
+
+**Changes:**
+- Version 1.5.13 release
+
+
+### 📚 Previous Versions
+
+### 🔧 Version 1.5.12
 **Date:** 2025-11-28  
 **Type:** patch
 
@@ -10,7 +20,7 @@
 - UI: BMC grid layout refinements & PDF button contrast
 
 
-### 📚 Previous Versions
+---
 
 ### 🔧 Version 1.5.11
 **Date:** 2025-11-28  

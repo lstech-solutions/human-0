@@ -1,7 +1,7 @@
 {
   "name": "@human-0/web",
   "main": "expo-router/entry",
-  "version": "1.5.12",
+  "version": "1.5.13",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -16,6 +16,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@human-0/i18n": "workspace:*",
     "@expo/vector-icons": "^15.0.3",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
