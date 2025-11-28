@@ -131,6 +131,11 @@ class VersionManager {
     // Update metadata
     this.versionData.metadata.lastModified = new Date().toISOString();
     
+    // Auto-detect changes if none provided
+    if (changes.length === 0) {
+      changes = this.detectChanges();
+    }
+    
     // Update changelog
     this.updateChangelog(type, changes);
     
@@ -140,6 +145,44 @@ class VersionManager {
     this.updateChangelogFile();
     
     console.log(`✅ Version updated to ${this.versionData.version}`);
+  }
+
+  detectChanges() {
+    try {
+      // Get git diff to detect changes
+      const output = execSync('git diff --name-only HEAD~1', { encoding: 'utf8' });
+      const changedFiles = output.trim().split('\n').filter(f => f.length > 0);
+      
+      const changes = [];
+      
+      // Analyze changed files and generate descriptions
+      changedFiles.forEach(file => {
+        if (file.includes('lambda/')) {
+          changes.push(`Updated lambda function: ${file.split('/').pop()}`);
+        } else if (file.includes('apps/web/') && file.includes('.tsx')) {
+          changes.push(`UI component updates`);
+        } else if (file.includes('apps/web/') && file.includes('.ts')) {
+          changes.push(`Backend API updates`);
+        } else if (file.includes('package.json')) {
+          changes.push(`Dependency updates`);
+        } else if (file.includes('version-manager.js')) {
+          changes.push(`Version management improvements`);
+        } else if (file.includes('README.md') || file.includes('CHANGELOG.md')) {
+          changes.push(`Documentation updates`);
+        } else if (file.includes('.config.') || file.includes('turbo.json')) {
+          changes.push(`Build configuration updates`);
+        } else {
+          changes.push(`Updated ${file}`);
+        }
+      });
+      
+      // Remove duplicates and return
+      return [...new Set(changes)];
+      
+    } catch (error) {
+      // Fallback to generic message
+      return [`Version ${this.versionData.version} release`];
+    }
   }
 
   updateChangelog(type, changes) {
@@ -239,19 +282,19 @@ class VersionManager {
         // No git diff output
       }
       
+      // Detect changes for commit message
+      const detectedChanges = this.detectChanges();
+      
       // Add all changes to git
       execSync('git add .', { stdio: 'inherit' });
       
-      // Generate commit message with file changes
+      // Generate commit message with detected changes
       let commitMessage = message || `chore: bump version to ${this.versionData.version}`;
       
-      if (changedFiles.length > 0 && !message) {
-        const fileSummary = changedFiles.map(f => {
-          const parts = f.split('/');
-          return parts[parts.length - 1] || f;
-        }).slice(0, 3).join(', ');
-        const more = changedFiles.length > 3 ? ` +${changedFiles.length - 3} more` : '';
-        commitMessage = `chore: bump version to ${this.versionData.version}\n\nChanges: ${fileSummary}${more}`;
+      // Always append detected changes for better tracking
+      if (detectedChanges.length > 0) {
+        const changesList = detectedChanges.map(change => `- ${change}`).join('\n');
+        commitMessage += `\n\nChanges:\n${changesList}`;
       }
       
       // Commit with version info
@@ -283,7 +326,8 @@ if (require.main === module) {
   
   const command = args[0];
   const type = args[1] || 'patch';
-  const changes = args.slice(2);
+  const commitIndex = args.indexOf('--commit');
+  const changes = commitIndex !== -1 ? args.slice(2, commitIndex) : args.slice(2);
   
   switch (command) {
     case 'bump':
@@ -291,7 +335,7 @@ if (require.main === module) {
         console.error('This project requires each version bump to be tagged. Re-run with --commit to auto-create the git tag.');
         process.exit(1);
       }
-      versionManager.incrementVersion(type, changes.filter(arg => arg !== '--commit'));
+      versionManager.incrementVersion(type, changes);
       versionManager.autoCommit();
       break;
       
