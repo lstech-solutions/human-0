@@ -75,21 +75,26 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
     const vw = typeof window !== "undefined" ? window.innerWidth || 0 : 0;
     const vh = typeof window !== "undefined" ? window.innerHeight || 0 : 0;
 
-    const maxOffsetX = Math.min(160, Math.max(80, vw * 0.12));
+    const isMobile = vw && vw < 768;
+
+    const maxOffsetX = isMobile
+      ? Math.min(100, Math.max(60, vw * 0.10))
+      : Math.min(160, Math.max(80, vw * 0.12));
     const randomX = (Math.random() - 0.5) * maxOffsetX;
 
-    const minY = 40;
-    const maxY = vh ? Math.min(vh * 0.3, 220) : 160;
+    // Y band is kept very close to the top/hero.
+    // On mobile we allow a small negative offset so the card can sit slightly
+    // above the base line, but never far from the hero title region.
+    const minY = isMobile ? -12 : -8;
+    const maxY = vh
+      ? isMobile
+        ? Math.min(vh * 0.18, 96)
+        : Math.min(vh * 0.25, 180)
+      : 120;
     const randomY = minY + Math.random() * Math.max(0, maxY - minY);
 
     const initial = { x: randomX, y: randomY };
     setDragPos(initial);
-
-    try {
-      window.localStorage.setItem(HUMAN_STATS_POS_STORAGE_KEY, JSON.stringify(initial));
-    } catch {
-      // ignore storage errors
-    }
   }, []);
 
   useEffect(() => {
