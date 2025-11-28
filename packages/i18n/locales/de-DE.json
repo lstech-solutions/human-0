@@ -316,5 +316,20 @@
     "sysAct": "SYS.ACT",
     "rendering": "◐ RENDERING",
     "framesLabel": "FRAMES: {{frameRate}}"
+  },
+  "stats": {
+    "verifiedHumansLabel": "HUMAN-Ø VERIFIZIERT",
+    "verifiedRatioLabel": "VERIFIZIERTER ANTEIL",
+    "showDetails": "Details anzeigen",
+    "hideDetails": "Details ausblenden",
+    "estimatedGlobalPopulation": "GESCHÄTZTE WELTBEVÖLKERUNG",
+    "estimateDisclaimer": "Schätzung, keine offiziellen Echtzeitdaten",
+    "baselineYear": "Basisjahr: {{year}} — regelmäßig mit offenen Datensätzen aktualisiert",
+    "liveStatusLabel": "LIVE-STATUS",
+    "streamActive": "STREAM.ACTIVE / DATA.SYNC",
+    "awaitingData": "AWAITING.DATA / ...",
+    "feedActive": "HUMAN-Ø PROOF FEED",
+    "feedInitializing": "FEED WIRD INITIALISIERT",
+    "dataSourcesLabel": "Datenquellen:"
   }
 }

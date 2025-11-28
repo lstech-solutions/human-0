@@ -324,5 +324,20 @@
     "sysAct": "SYS.ACT",
     "rendering": "◐ RENDERING",
     "framesLabel": "FRAMES: {{frameRate}}"
+  },
+  "stats": {
+    "verifiedHumansLabel": "HUMAN-Ø موثَّقون",
+    "verifiedRatioLabel": "نسبة التوثيق",
+    "showDetails": "إظهار التفاصيل",
+    "hideDetails": "إخفاء التفاصيل",
+    "estimatedGlobalPopulation": "العدد العالمي التقديري للسكان",
+    "estimateDisclaimer": "قيمة تقديرية، ليست بيانات رسمية آنية",
+    "baselineYear": "سنة الأساس: {{year}} — يتم التحديث دورياً من مجموعات بيانات مفتوحة",
+    "liveStatusLabel": "الحالة المباشرة",
+    "streamActive": "STREAM.ACTIVE / DATA.SYNC",
+    "awaitingData": "AWAITING.DATA / ...",
+    "feedActive": "HUMAN-Ø PROOF FEED",
+    "feedInitializing": "INITIALIZING FEED",
+    "dataSourcesLabel": "مصادر البيانات:"
   }
 }

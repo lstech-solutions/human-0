@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useEffect, useState, useRef } from "react";
+import { useTranslation } from "@human-0/i18n";
 import { cn } from "@/lib/utils";
 import { CommitsGrid } from "./CommitsGrid";
 
@@ -42,6 +43,7 @@ const formatCompact = (value: number) => {
 };
 
 export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: HumanProofStatsProps) {
+  const { t } = useTranslation();
   const [stats, setStats] = useState<HumanStats | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [estimated, setEstimated] = useState<number | null>(null);
@@ -50,7 +52,15 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
   const [dragStart, setDragStart] = useState<{ x: number; y: number } | null>(null);
   const [dragOrigin, setDragOrigin] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const cardRef = useRef<HTMLDivElement | null>(null);
   const detailsRef = useRef<HTMLDivElement | null>(null);
+
+  // Randomize initial card position within a safe band below the hero title
+  useEffect(() => {
+    const randomX = (Math.random() - 0.5) * 160; // small left/right variation
+    const randomY = 40 + Math.random() * 120; // only move downward from base
+    setDragPos({ x: randomX, y: randomY });
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -99,6 +109,14 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
       clearInterval(id);
     };
   }, [stats]);
+
+  // When collapsing the details, reset any manual resize applied to the card
+  useEffect(() => {
+    if (!expanded && cardRef.current) {
+      cardRef.current.style.width = "";
+      cardRef.current.style.height = "";
+    }
+  }, [expanded]);
 
   const verified = stats?.verifiedHumans ?? 0;
   const total = stats?.totalHumans ?? 0;
@@ -153,11 +171,14 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
       onWheel={handleWheel}
     >
       <div
+        ref={cardRef}
         className={cn(
-          "bg-card rounded-[10px] sm:rounded-[15px] p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 shadow-sm",
+          "bg-card rounded-[10px] sm:rounded-[15px] p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 shadow-sm overflow-auto",
+          expanded ? "resize" : "resize-none",
           isDragging && "shadow-lg",
           className
         )}
+        style={{ minWidth: 260, minHeight: 180 }}
       >
       <div className="relative w-full overflow-hidden rounded-[8px] sm:rounded-[10px] border border-emerald-500/30 bg-card/80 mb-2 sm:mb-3">
         <div className="absolute inset-0 opacity-40 pointer-events-none">
@@ -166,7 +187,7 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
         <div className="relative flex flex-col sm:flex-row sm:flex-nowrap flex-wrap items-start sm:items-center justify-between gap-3 p-2 sm:p-3">
           <div className="flex flex-col min-w-0">
             <span className="text-[10px] sm:text-xs font-mono tracking-widest uppercase opacity-60 break-words">
-              HUMAN-Ø PROVED
+              {t("stats.verifiedHumansLabel")}
             </span>
             <div className="flex items-baseline gap-2 flex-wrap min-w-0">
               <span className="text-2xl sm:text-3xl font-semibold text-emerald-400">
@@ -177,9 +198,9 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
               </span>
             </div>
           </div>
-          <div className="text-right sm:text-right text-left max-w-full sm:max-w-[45%]">
+          <div className="hidden sm:block text-right max-w-full sm:max-w-[45%]">
             <span className="text-[10px] sm:text-xs font-mono tracking-widest uppercase opacity-90 break-words">
-              VERIFIED RATIO
+              {t("stats.verifiedRatioLabel")}
             </span>
             <div className="text-2xl sm:text-3xl font-semibold text-cyan-400">
               {ratio.toFixed(2)}%
@@ -192,7 +213,7 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
         className="mt-1 inline-flex items-center gap-1 self-start text-[10px] sm:text-[11px] font-mono uppercase tracking-widest opacity-80 hover:opacity-100 transition-opacity"
         onClick={() => setExpanded((prev) => !prev)}
       >
-        <span>{expanded ? "Hide details" : "Show details"}</span>
+        <span>{expanded ? t("stats.hideDetails") : t("stats.showDetails")}</span>
         <span>{expanded ? "−" : "+"}</span>
       </button>
 
@@ -203,19 +224,19 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
         >
           <div className="flex flex-col gap-1">
             <span className="text-[10px] sm:text-xs font-mono tracking-widest uppercase opacity-90">
-              ESTIMATED GLOBAL POPULATION
+              {t("stats.estimatedGlobalPopulation")}
             </span>
             <div className="flex items-baseline gap-2">
               <span className="text-lg sm:text-xl font-semibold text-emerald-300">
                 {formatNumber(estimated ?? (total || 8_260_000_000))}
               </span>
               <span className="text-[10px] sm:text-xs font-mono opacity-70">
-                Estimate, not real-time official data
+                {t("stats.estimateDisclaimer")}
               </span>
             </div>
             {stats && stats.baselineYear && (
               <span className="text-[10px] sm:text-xs font-mono opacity-80">
-                Baseline year: {stats.baselineYear} — refreshed periodically from open datasets
+                {t("stats.baselineYear", { year: stats.baselineYear })}
               </span>
             )}
           </div>
@@ -225,7 +246,7 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] sm:text-xs font-mono tracking-widest uppercase opacity-90">
-                LIVE STATUS
+                {t("stats.liveStatusLabel")}
               </span>
               {error ? (
                 <span className="text-[11px] sm:text-xs text-red-400 font-mono">
@@ -233,7 +254,7 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
                 </span>
               ) : (
                 <span className="text-[11px] sm:text-xs text-emerald-300 font-mono">
-                  {stats ? "STREAM.ACTIVE / DATA.SYNC" : "AWAITING.DATA / ..."}
+                  {stats ? t("stats.streamActive") : t("stats.awaitingData")}
                 </span>
               )}
             </div>
@@ -241,14 +262,14 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
             <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono tracking-widest uppercase opacity-90">
               <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>
-                {stats ? "HUMAN-Ø PROOF FEED" : "INITIALIZING FEED"}
+                {stats ? t("stats.feedActive") : t("stats.feedInitializing")}
               </span>
             </div>
           </div>
 
           {stats && stats.sources && stats.sources.length > 0 && (
             <div className="mt-2 flex flex-col gap-1 text-[9px] sm:text-[10px] font-mono opacity-90">
-              <span>Data sources:</span>
+              <span>{t("stats.dataSourcesLabel")}</span>
               {stats.sources.map((source, index) => (
                 <a
                   key={`${source.url}-${index}`}

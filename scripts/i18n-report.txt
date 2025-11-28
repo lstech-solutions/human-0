@@ -1,9 +1,23 @@
 Source locale: en.json
-Total keys: 208
+Total keys: 222
 
 === Locale: ar-SA.json ===
 Total keys: 216
-  ✅ No missing keys compared to en.json
+  ❗ Missing keys (14):
+    - stats
+    - stats.awaitingData
+    - stats.baselineYear
+    - stats.dataSourcesLabel
+    - stats.estimateDisclaimer
+    - stats.estimatedGlobalPopulation
+    - stats.feedActive
+    - stats.feedInitializing
+    - stats.hideDetails
+    - stats.liveStatusLabel
+    - stats.showDetails
+    - stats.streamActive
+    - stats.verifiedHumansLabel
+    - stats.verifiedRatioLabel
   ℹ️ Extra keys (8):
     + plurals.days_few
     + plurals.days_many
@@ -16,49 +30,119 @@ Total keys: 216
 
 
 === Locale: de-DE.json ===
-Total keys: 208
+Total keys: 222
   ✅ No missing keys compared to en.json
   ✅ No extra keys compared to en.json
 
 
 === Locale: es-CO.json ===
 Total keys: 208
-  ✅ No missing keys compared to en.json
+  ❗ Missing keys (14):
+    - stats
+    - stats.awaitingData
+    - stats.baselineYear
+    - stats.dataSourcesLabel
+    - stats.estimateDisclaimer
+    - stats.estimatedGlobalPopulation
+    - stats.feedActive
+    - stats.feedInitializing
+    - stats.hideDetails
+    - stats.liveStatusLabel
+    - stats.showDetails
+    - stats.streamActive
+    - stats.verifiedHumansLabel
+    - stats.verifiedRatioLabel
   ✅ No extra keys compared to en.json
 
 
 === Locale: es-ES.json ===
 Total keys: 208
-  ✅ No missing keys compared to en.json
+  ❗ Missing keys (14):
+    - stats
+    - stats.awaitingData
+    - stats.baselineYear
+    - stats.dataSourcesLabel
+    - stats.estimateDisclaimer
+    - stats.estimatedGlobalPopulation
+    - stats.feedActive
+    - stats.feedInitializing
+    - stats.hideDetails
+    - stats.liveStatusLabel
+    - stats.showDetails
+    - stats.streamActive
+    - stats.verifiedHumansLabel
+    - stats.verifiedRatioLabel
   ✅ No extra keys compared to en.json
 
 
 === Locale: es-MX.json ===
 Total keys: 208
-  ✅ No missing keys compared to en.json
+  ❗ Missing keys (14):
+    - stats
+    - stats.awaitingData
+    - stats.baselineYear
+    - stats.dataSourcesLabel
+    - stats.estimateDisclaimer
+    - stats.estimatedGlobalPopulation
+    - stats.feedActive
+    - stats.feedInitializing
+    - stats.hideDetails
+    - stats.liveStatusLabel
+    - stats.showDetails
+    - stats.streamActive
+    - stats.verifiedHumansLabel
+    - stats.verifiedRatioLabel
   ✅ No extra keys compared to en.json
 
 
 === Locale: es.json ===
-Total keys: 208
+Total keys: 222
   ✅ No missing keys compared to en.json
   ✅ No extra keys compared to en.json
 
 
 === Locale: fr-FR.json ===
 Total keys: 208
-  ✅ No missing keys compared to en.json
+  ❗ Missing keys (14):
+    - stats
+    - stats.awaitingData
+    - stats.baselineYear
+    - stats.dataSourcesLabel
+    - stats.estimateDisclaimer
+    - stats.estimatedGlobalPopulation
+    - stats.feedActive
+    - stats.feedInitializing
+    - stats.hideDetails
+    - stats.liveStatusLabel
+    - stats.showDetails
+    - stats.streamActive
+    - stats.verifiedHumansLabel
+    - stats.verifiedRatioLabel
   ✅ No extra keys compared to en.json
 
 
 === Locale: pt-BR.json ===
 Total keys: 208
-  ✅ No missing keys compared to en.json
+  ❗ Missing keys (14):
+    - stats
+    - stats.awaitingData
+    - stats.baselineYear
+    - stats.dataSourcesLabel
+    - stats.estimateDisclaimer
+    - stats.estimatedGlobalPopulation
+    - stats.feedActive
+    - stats.feedInitializing
+    - stats.hideDetails
+    - stats.liveStatusLabel
+    - stats.showDetails
+    - stats.streamActive
+    - stats.verifiedHumansLabel
+    - stats.verifiedRatioLabel
   ✅ No extra keys compared to en.json
 
 
 === Locale: zh-CN.json ===
-Total keys: 208
+Total keys: 222
   ✅ No missing keys compared to en.json
   ✅ No extra keys compared to en.json
 

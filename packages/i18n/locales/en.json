@@ -316,5 +316,20 @@
     "sysAct": "SYS.ACT",
     "rendering": "◐ RENDERING",
     "framesLabel": "FRAMES: {{frameRate}}"
+  },
+  "stats": {
+    "verifiedHumansLabel": "HUMAN-Ø PROVED",
+    "verifiedRatioLabel": "VERIFIED RATIO",
+    "showDetails": "Show details",
+    "hideDetails": "Hide details",
+    "estimatedGlobalPopulation": "ESTIMATED GLOBAL POPULATION",
+    "estimateDisclaimer": "Estimate, not real-time official data",
+    "baselineYear": "Baseline year: {{year}} — refreshed periodically from open datasets",
+    "liveStatusLabel": "LIVE STATUS",
+    "streamActive": "STREAM.ACTIVE / DATA.SYNC",
+    "awaitingData": "AWAITING.DATA / ...",
+    "feedActive": "HUMAN-Ø PROOF FEED",
+    "feedInitializing": "INITIALIZING FEED",
+    "dataSourcesLabel": "Data sources:"
   }
 }

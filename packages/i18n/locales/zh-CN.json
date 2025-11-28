@@ -316,5 +316,20 @@
     "sysAct": "SYS.ACT",
     "rendering": "◐ RENDERING",
     "framesLabel": "FRAMES：{{frameRate}}"
+  },
+  "stats": {
+    "verifiedHumansLabel": "已验证的 HUMAN-Ø",
+    "verifiedRatioLabel": "验证比例",
+    "showDetails": "显示详情",
+    "hideDetails": "隐藏详情",
+    "estimatedGlobalPopulation": "全球人口估算",
+    "estimateDisclaimer": "估算值，并非实时官方数据",
+    "baselineYear": "基准年份：{{year}} —— 定期基于开放数据刷新",
+    "liveStatusLabel": "实时状态",
+    "streamActive": "STREAM.ACTIVE / DATA.SYNC",
+    "awaitingData": "AWAITING.DATA / ...",
+    "feedActive": "HUMAN-Ø 证明数据流",
+    "feedInitializing": "正在初始化数据流",
+    "dataSourcesLabel": "数据来源："
   }
 }
