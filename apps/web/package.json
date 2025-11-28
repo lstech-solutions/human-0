@@ -1,7 +1,7 @@
 {
   "name": "@human-0/web",
   "main": "expo-router/entry",
-  "version": "1.6.8",
+  "version": "1.6.9",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -9,7 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build": "expo export -p web",
-    "build:pwa": "expo export -p web && npx @serwist/cli inject-manifest",
+    "build:pwa": "WEB_OUTPUT=static expo export -p web && npx @serwist/cli inject-manifest",
     "test": "jest --watchAll",
     "lint": "eslint \"app/**/*.{js,jsx,ts,tsx}\""
   },
