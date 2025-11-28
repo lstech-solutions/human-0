@@ -1,9 +1,9 @@
 'use strict';
 
 // Proxy all API requests to the upstream Expo/Next server, with local fallbacks.
-// Defaults to https://human-0.com unless UPSTREAM_BASE is set.
+// Defaults to https://api.human0.me unless UPSTREAM_BASE is set.
 
-const UPSTREAM_BASE = process.env.UPSTREAM_BASE || 'https://human-0.com';
+const UPSTREAM_BASE = process.env.UPSTREAM_BASE || 'https://api.human0.me';
 const DEFAULT_ORIGINS = ['*'];
 
 const getAllowedOrigins = () => {

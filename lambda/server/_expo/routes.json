@@ -1,0 +1,110 @@
+{
+  "apiRoutes": [
+    {
+      "file": "_expo/functions/api/terms+api.js",
+      "page": "/api/terms",
+      "namedRegex": "^/api/terms(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "_expo/functions/api/privacy+api.js",
+      "page": "/api/privacy",
+      "namedRegex": "^/api/privacy(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "_expo/functions/api/human-stats+api.js",
+      "page": "/api/human-stats",
+      "namedRegex": "^/api/human\\-stats(?:/)?$",
+      "routeKeys": {}
+    }
+  ],
+  "htmlRoutes": [
+    {
+      "file": "./index.tsx",
+      "page": "/index",
+      "namedRegex": "^/(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./nfts.tsx",
+      "page": "/nfts",
+      "namedRegex": "^/nfts(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./terms.tsx",
+      "page": "/terms",
+      "namedRegex": "^/terms(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./impact.tsx",
+      "page": "/impact",
+      "namedRegex": "^/impact(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./canvas.tsx",
+      "page": "/canvas",
+      "namedRegex": "^/canvas(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./profile.tsx",
+      "page": "/profile",
+      "namedRegex": "^/profile(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./privacy.tsx",
+      "page": "/privacy",
+      "namedRegex": "^/privacy(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "expo-router/build/views/Sitemap.js",
+      "page": "/_sitemap",
+      "namedRegex": "^/_sitemap(?:/)?$",
+      "routeKeys": {},
+      "generated": true
+    },
+    {
+      "file": "./pdf-download.tsx",
+      "page": "/pdf-download",
+      "namedRegex": "^/pdf\\-download(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./documentation.tsx",
+      "page": "/documentation",
+      "namedRegex": "^/documentation(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./documentation/terms.tsx",
+      "page": "/documentation/terms",
+      "namedRegex": "^/documentation/terms(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./documentation/privacy.tsx",
+      "page": "/documentation/privacy",
+      "namedRegex": "^/documentation/privacy(?:/)?$",
+      "routeKeys": {}
+    }
+  ],
+  "notFoundRoutes": [
+    {
+      "file": "expo-router/build/views/Unmatched.js",
+      "page": "/+not-found",
+      "namedRegex": "^(?:/(?<notfound>.+?))?(?:/)?$",
+      "routeKeys": {
+        "notfound": "not-found"
+      },
+      "generated": true
+    }
+  ],
+  "redirects": [],
+  "rewrites": []
+}
