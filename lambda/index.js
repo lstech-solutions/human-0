@@ -119,15 +119,16 @@ const serveLocalApi = async (event, apiPath) => {
     }
     
     // Check if file exists
-    if (!fs.existsSync(path.resolve(filePath))) {
-      console.error('API file not found:', path.resolve(filePath));
+    const fullPath = path.join(__dirname, filePath);
+    if (!fs.existsSync(fullPath)) {
+      console.error('API file not found:', fullPath);
       return jsonResponse(event, 500, { error: 'API file not found in deployment' });
     }
     
     // Clear require cache to get fresh module
-    delete require.cache[require.resolve(path.resolve(filePath))];
+    delete require.cache[require.resolve(fullPath)];
     
-    const apiModule = require(path.resolve(filePath));
+    const apiModule = require(fullPath);
     
     if (typeof apiModule.GET === 'function') {
       const response = await apiModule.GET();
