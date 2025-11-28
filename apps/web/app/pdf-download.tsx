@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { ArrowLeft, Download, FileText, BookOpen, CheckCircle, Globe } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
+import { apiClient } from '../lib/api-client';
 
 const { width, height } = Dimensions.get('window');
 
@@ -97,7 +98,7 @@ export default function PDFDownloadScreen() {
       if (typeof window !== 'undefined' && typeof document !== 'undefined') {
         // First, try to check if the file exists by making a HEAD request
         try {
-          const response = await fetch(downloadFile, { method: 'HEAD' });
+          const response = await apiClient.head(downloadFile);
           if (!response.ok) {
             throw new Error(`PDF file not found (${response.status})`);
           }

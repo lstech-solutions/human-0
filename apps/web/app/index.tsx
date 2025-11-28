@@ -12,18 +12,24 @@ import { useTheme } from '../theme/ThemeProvider';
 import { MagnetizeButton } from '../components/ui/MagnetizeButton';
 import VersionDrawer from '../components/VersionDrawer';
 import { HumanProofStats, type HumanStats } from '../components/HumanProofStats';
+import { apiClient } from '../lib/api-client';
 
 function randomizeZeroGlyphs(value: string): string {
   return value.replace(/[01]/g, (digit) => (Math.random() < 0.5 ? digit : 'Ø'));
 }
 
+type HumanStatsResponse = {
+  verifiedHumans?: number;
+  totalHumans?: number;
+  baselinePopulation?: number;
+  baselineTimestamp?: string;
+  netChangePerSecond?: number;
+  baselineYear?: number | null;
+  sources?: Array<Record<string, unknown>>;
+};
+
 async function fetchHumanStats(): Promise<HumanStats> {
-  // Fetch verified humans from internal API
-  const verifiedRes = await fetch('/api/human-stats');
-  if (!verifiedRes.ok) {
-    throw new Error('Failed to fetch verified humans');
-  }
-  const verifiedData = await verifiedRes.json();
+  const verifiedData = await apiClient.getJson<HumanStatsResponse>('/api/human-stats');
 
   const verifiedHumans = typeof verifiedData.verifiedHumans === 'number'
     ? verifiedData.verifiedHumans
