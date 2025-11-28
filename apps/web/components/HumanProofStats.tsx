@@ -198,7 +198,10 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
 
   return (
     <div
-      className="relative w-full max-w-xl mx-auto"
+      className={cn(
+        "relative w-full max-w-xl mx-auto",
+        isDragging && "select-none"
+      )}
       style={{
         transform: `translate3d(${dragPos.x}px, ${dragPos.y}px, 0)` ,
         transition: isDragging ? "none" : "transform 160ms ease-out",
@@ -218,7 +221,7 @@ export function HumanProofStats({ fetchStats, refreshMs = 30000, className }: Hu
         className={cn(
           "bg-card rounded-[10px] sm:rounded-[15px] p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 shadow-sm overflow-auto",
           expanded ? "resize" : "resize-none",
-          isDragging && "shadow-lg",
+          isDragging && "shadow-lg select-none",
           className
         )}
         style={{ minWidth: 260, minHeight: 180 }}
