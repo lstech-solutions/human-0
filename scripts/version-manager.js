@@ -212,8 +212,13 @@ class VersionManager {
     if (currentChangelog && currentChangelog.changes.length > 0) {
       const historyEntry = { ...currentChangelog };
       if (!historyEntry.timestamp) {
-        // Add timestamp to legacy entries that don't have it
-        historyEntry.timestamp = new Date().toISOString();
+        // For legacy entries, use date with a reasonable time instead of current time
+        if (historyEntry.date) {
+          // Use noon of the release date for legacy entries
+          historyEntry.timestamp = new Date(historyEntry.date + 'T12:00:00.000Z').toISOString();
+        } else {
+          historyEntry.timestamp = new Date().toISOString();
+        }
       }
       this.versionData.changelog.history.unshift(historyEntry);
     }

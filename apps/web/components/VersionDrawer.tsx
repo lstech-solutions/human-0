@@ -71,8 +71,16 @@ function VersionDrawerInner({ isOpen, appVersion, onClose }: VersionDrawerProps)
             <div className="text-right">
               <div className="text-[11px] lg:text-xs text-white/60 font-mono">
                 {current?.timestamp ? 
-                  new Date(current.timestamp).toISOString().replace('T', ' ').substring(0, 16) + ' UTC' :
-                  (current?.date ? new Date(current.date).toISOString().replace('T', ' ').substring(0, 16) + ' UTC' : 'Latest')
+                  new Date(current.timestamp).toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  }) :
+                  (current?.date ? new Date(current.date).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric'
+                  }) : 'Latest')
                 }
               </div>
             </div>
@@ -97,14 +105,7 @@ function VersionDrawerInner({ isOpen, appVersion, onClose }: VersionDrawerProps)
                 </p>
               </div>
 
-              <div className="relative my-4">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-white/10"></div>
-                </div>
-                <div className="relative flex justify-center text-xs">
-                  <span className="bg-[#050B10] px-3 text-white/30">················</span>
-                </div>
-              </div>
+
 
               <div
                 className={
@@ -150,10 +151,18 @@ function VersionDrawerInner({ isOpen, appVersion, onClose }: VersionDrawerProps)
                           </span>
                           <span className="text-white/70 ml-2 group-hover:text-white/80 transition-colors duration-200"> – {description}</span>
                         </div>
-                        <div className="text-[11px] lg:text-xs text-white/60 font-mono group-hover:text-white/70 transition-colors duration-200">
+                        <div className="text-[11px] lg:text-xs text-white/60 font-mono">
                           {release.timestamp ? 
-                            new Date(release.timestamp).toISOString().replace('T', ' ').substring(0, 16) + ' UTC' :
-                            (release.date ? new Date(release.date).toISOString().replace('T', ' ').substring(0, 16) + ' UTC' : '')
+                            new Date(release.timestamp).toLocaleString('en-US', {
+                              month: 'short',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            }) :
+                            (release.date ? new Date(release.date).toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: 'numeric'
+                            }) : '')
                           }
                         </div>
                       </a>
