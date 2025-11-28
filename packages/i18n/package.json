@@ -1,6 +1,6 @@
 {
   "name": "@human-0/i18n",
-  "version": "1.6.17",
+  "version": "1.6.18",
   "main": "index.ts",
   "types": "index.ts",
   "exports": {
