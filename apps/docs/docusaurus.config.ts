@@ -8,6 +8,7 @@ const config: Config = {
   title: 'HUMΛN-Ø Docs',
   tagline: 'Sustainable impact through Web3 technology',
   favicon: 'img/favicon.ico',
+  clientModules: [require.resolve('./src/client')],
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -30,10 +31,6 @@ const config: Config = {
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'es'],
-  },
 
   presets: [
     [
@@ -44,22 +41,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
+            'https://github.com/lstech-solutions/human-0.com/tree/main/apps/docs',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -87,7 +69,67 @@ const config: Config = {
           position: 'left',
           label: 'Docs',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        {
+          type: 'dropdown',
+          position: 'right',
+          label: '🌐 Language',
+          items: [
+            {
+              label: '🇺🇸 English',
+              to: 'javascript:void(0)',
+              customProps: {
+                onClick: 'handleLanguageChange("en")'
+              }
+            },
+            {
+              label: '🇪🇸 Español',
+              to: 'javascript:void(0)',
+              customProps: {
+                onClick: 'handleLanguageChange("es")'
+              }
+            },
+            {
+              label: '🇩🇪 Deutsch',
+              to: 'javascript:void(0)',
+              customProps: {
+                onClick: 'handleLanguageChange("de")'
+              }
+            },
+            {
+              label: '🇫🇷 Français',
+              to: 'javascript:void(0)',
+              customProps: {
+                onClick: 'handleLanguageChange("fr")'
+              }
+            },
+            {
+              label: '🇵🇹 Português',
+              to: 'javascript:void(0)',
+              customProps: {
+                onClick: 'handleLanguageChange("pt")'
+              }
+            },
+            {
+              label: '🇨🇳 中文',
+              to: 'javascript:void(0)',
+              customProps: {
+                onClick: 'handleLanguageChange("zh")'
+              }
+            },
+            {
+              label: '🇸🇦 العربية',
+              to: 'javascript:void(0)',
+              customProps: {
+                onClick: 'handleLanguageChange("ar")'
+              }
+            },
+          ],
+        },
+        {
+          href: 'https://human-0.com',
+          label: '← Back to Main Site',
+          position: 'right',
+        },
         {
           href: 'https://github.com/lstech-solutions/human-0.com',
           label: 'GitHub',
@@ -112,6 +154,19 @@ const config: Config = {
           ],
         },
         {
+          title: 'Legal',
+          items: [
+            {
+              label: 'Privacy Policy',
+              to: '/privacy',
+            },
+            {
+              label: 'Terms of Service',
+              to: '/terms',
+            },
+          ],
+        },
+        {
           title: 'Community',
           items: [
             {
@@ -124,12 +179,8 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
-              label: 'HUMΛN-Ø',
-              href: 'https://lstech-solutions.github.io/human-0.com',
+              label: 'HUMΛN-Ø Main Site',
+              href: 'https://human-0.com',
             },
           ],
         },

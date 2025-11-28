@@ -1,4 +1,5 @@
 import { useTranslation } from '@human-0/i18n';
+import { useLanguagePicker } from '@human-0/i18n/hooks';
 import { ScrollView, StyleSheet, View, Text, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
@@ -7,36 +8,15 @@ import { Platform } from 'react-native';
 
 export default function PrivacyScreen() {
   const { t } = useTranslation();
+  const { currentLanguage } = useLanguagePicker();
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentLocale, setCurrentLocale] = useState<string>('en');
-
-  // Auto-detect language on mount
-  useEffect(() => {
-    const detectLanguage = () => {
-      // Try to get stored preference first
-      const stored = localStorage?.getItem('preferred-language');
-      if (stored) return stored;
-      
-      // Auto-detect from browser
-      if (Platform.OS === 'web' && navigator.language) {
-        const browserLang = navigator.language.split('-')[0]; // 'es', 'en', etc.
-        // Only use if we support this language
-        return ['en', 'es'].includes(browserLang) ? browserLang : 'en';
-      }
-      
-      return 'en'; // Default fallback
-    };
-
-    const detectedLocale = detectLanguage();
-    setCurrentLocale(detectedLocale);
-  }, []);
 
   useEffect(() => {
     (async () => {
       try {
-        const res = await apiClient.request(`/api/privacy?locale=${currentLocale}`);
+        const res = await apiClient.request(`/api/privacy?locale=${currentLanguage}`);
         const text = await res.text();
         setContent(text);
       } catch (err) {
@@ -45,7 +25,7 @@ export default function PrivacyScreen() {
         setLoading(false);
       }
     })();
-  }, [currentLocale]);
+  }, [currentLanguage]);
 
   // HTML markdown renderer for web mode
   const renderHTMLMarkdown = (md: string) => {
@@ -251,14 +231,6 @@ export default function PrivacyScreen() {
     flushList();
     
     return elements;
-  };
-
-  const changeLanguage = (locale: string) => {
-    setCurrentLocale(locale);
-    // Store preference for future visits
-    if (Platform.OS === 'web') {
-      localStorage.setItem('preferred-language', locale);
-    }
   };
 
   return (
