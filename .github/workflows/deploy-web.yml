@@ -35,7 +35,7 @@ jobs:
         run: pnpm install --no-frozen-lockfile
       - name: Build
         run: |
-          pnpm --filter @human-0/web build
+          pnpm --filter @human-0/web build:pwa
           pnpm --filter @human-0/docs build
       - name: Copy docs to web dist
         run: |

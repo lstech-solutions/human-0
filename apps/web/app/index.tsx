@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Platform } from 'react-native';
 import { useTranslation } from '@human-0/i18n';
 import FlickeringGrid from '../components/FlickeringGrid';
 import { H1, Body } from '../components/typography';
@@ -288,6 +289,58 @@ export default function Home() {
 
     return () => {
       document.head.removeChild(style);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (process.env.NODE_ENV !== 'production') return;
+    if (Platform.OS !== 'web') return;
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((registration) => {
+          if (registration.waiting && navigator.serviceWorker.controller) {
+            registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+          }
+
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            if (!newWorker) return;
+
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (registration.waiting) {
+                  registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+                }
+              }
+            });
+          });
+        })
+        .catch(() => {});
+
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        window.location.reload();
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (Platform.OS !== 'web') return;
+
+    const handler = (event: Event) => {
+      const e = event as any;
+      if (!e || typeof e.prompt !== 'function') return;
+      e.preventDefault();
+      e.prompt();
+    };
+
+    window.addEventListener('beforeinstallprompt', handler as any);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handler as any);
     };
   }, []);
 
