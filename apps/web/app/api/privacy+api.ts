@@ -27,13 +27,13 @@ export async function GET(request: Request) {
     let docsPath: string | undefined;
     
     if (docusaurusLocale === 'en') {
-      // English - use main docs directory (updated path)
+      // English - use main docs directory
       const possiblePaths = [
-        path.resolve(process.cwd(), 'docs/docs/privacy.md'),  // Production: docs/docs next to server
-        path.resolve(process.cwd(), 'docs/privacy.md'),  // Production: fallback
-        path.resolve(process.cwd(), '../docs/docs/privacy.md'),  // Development
-        path.resolve(__dirname, '../../../docs/docs/privacy.md'),  // Alternative
-        path.resolve(__dirname, '../docs/docs/privacy.md'),  // Lambda: docs/docs next to server
+        path.resolve(process.cwd(), 'docs/privacy.md'),  // Production: docs next to server
+        path.resolve(process.cwd(), 'privacy.md'),  // Production: files copied to root
+        path.resolve(process.cwd(), '../docs/privacy.md'),  // Development
+        path.resolve(__dirname, '../../../docs/privacy.md'),  // Alternative
+        path.resolve(__dirname, '../docs/privacy.md'),  // Lambda: docs next to server
       ];
       
       docsPath = possiblePaths.find(p => fs.existsSync(p)) || possiblePaths[0];
@@ -51,11 +51,11 @@ export async function GET(request: Request) {
       // Fallback to English if localized version doesn't exist
       if (!docsPath) {
         const fallbackPaths = [
-          path.resolve(process.cwd(), 'docs/docs/privacy.md'),  // Production: docs/docs next to server
-          path.resolve(process.cwd(), 'docs/privacy.md'),  // Production: fallback
-          path.resolve(process.cwd(), '../docs/docs/privacy.md'),  // Development
-          path.resolve(__dirname, '../../../docs/docs/privacy.md'),  // Alternative
-          path.resolve(__dirname, '../docs/docs/privacy.md'),  // Lambda: docs/docs next to server
+          path.resolve(process.cwd(), 'docs/privacy.md'),  // Production: docs next to server
+          path.resolve(process.cwd(), 'privacy.md'),  // Production: files copied to root
+          path.resolve(process.cwd(), '../docs/privacy.md'),  // Development
+          path.resolve(__dirname, '../../../docs/privacy.md'),  // Alternative
+          path.resolve(__dirname, '../docs/privacy.md'),  // Lambda: docs next to server
         ];
         docsPath = fallbackPaths.find(p => fs.existsSync(p)) || fallbackPaths[0];
       }
@@ -63,7 +63,7 @@ export async function GET(request: Request) {
     
     // Ensure docsPath is defined (fallback to first option if somehow still undefined)
     if (!docsPath) {
-      docsPath = path.resolve(process.cwd(), 'docs/docs/privacy.md');  // Production: docs/docs next to server
+      docsPath = path.resolve(process.cwd(), 'docs/privacy.md');  // Production: docs next to server
     }
     
     const content = fs.readFileSync(docsPath, 'utf-8');
