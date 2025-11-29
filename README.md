@@ -12,7 +12,7 @@
     <a href="https://github.com/lstech-solutions/human-0.com/actions/workflows/deploy-web.yml">
       <img alt="Web Deploy" src="https://github.com/lstech-solutions/human-0.com/actions/workflows/deploy-web.yml/badge.svg" />
     </a>
-    <a href="https://human-0.com/docs/intro">
+    <a href="https://human-0.com/documentation/docs/intro">
       <img alt="Documentation" src="https://img.shields.io/badge/docs-latest-blue.svg" />
     </a>
     <a href="https://github.com/lstech-solutions/human-0.com/actions/workflows/deploy-lambda.yml">

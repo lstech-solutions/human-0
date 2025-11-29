@@ -131,9 +131,9 @@ class VersionManager {
     // Update metadata
     this.versionData.metadata.lastModified = new Date().toISOString();
     
-    // Auto-detect changes if none provided
+    // Use provided changes or generate generic message if empty
     if (changes.length === 0) {
-      changes = this.detectChanges();
+      changes = [`Version ${this.versionData.version} release`];
     }
     
     // Update changelog
@@ -149,8 +149,29 @@ class VersionManager {
 
   detectChanges() {
     try {
-      // Get git diff to detect changes
-      const output = execSync('git diff --name-only HEAD~1', { encoding: 'utf8' });
+      // Find the last commit that wasn't a version bump
+      let commitToCompare = 'HEAD';
+      try {
+        const logOutput = execSync('git log --oneline -10', { encoding: 'utf8' });
+        const commits = logOutput.trim().split('\n');
+        
+        for (const commit of commits) {
+          const commitHash = commit.split(' ')[0];
+          const commitMessage = commit.substring(commit.indexOf(' ') + 1);
+          
+          // Skip version bump commits
+          if (!commitMessage.includes('release v') && !commitMessage.includes(': release v')) {
+            commitToCompare = commitHash;
+            break;
+          }
+        }
+      } catch (error) {
+        // Fallback to HEAD~1 if log parsing fails
+        commitToCompare = 'HEAD~1';
+      }
+      
+      // Get git diff to detect changes from the last meaningful commit
+      const output = execSync(`git diff --name-only ${commitToCompare}`, { encoding: 'utf8' });
       const changedFiles = output.trim().split('\n').filter(f => f.length > 0);
       
       const changes = [];
@@ -171,13 +192,13 @@ class VersionManager {
         
         if (file.includes('lambda/')) {
           hasLambdaChanges = true;
-        } else if (file.includes('apps/web/') && file.includes('.tsx')) {
+        } else if (file.includes('apps/web/') && (file.includes('.tsx') || file.includes('.jsx'))) {
           hasUIChanges = true;
-        } else if (file.includes('apps/web/') && file.includes('.ts')) {
+        } else if (file.includes('apps/web/') && (file.includes('.ts') || file.includes('.js'))) {
           hasAPIChanges = true;
         } else if (file.includes('version-manager.js') || file.includes('version.json')) {
           hasVersionChanges = true;
-        } else if (file.includes('README.md') || file.includes('CHANGELOG.md')) {
+        } else if (file.includes('README.md') || file.includes('CHANGELOG.md') || file.includes('docs/')) {
           hasDocsChanges = true;
         } else if (file.includes('.config.') || file.includes('turbo.json') || file.includes('package.json')) {
           hasConfigChanges = true;
@@ -392,7 +413,9 @@ if (require.main === module) {
         console.error('This project requires each version bump to be tagged. Re-run with --commit to auto-create the git tag.');
         process.exit(1);
       }
-      versionManager.incrementVersion(type, changes);
+      // Detect changes BEFORE modifying files
+      const detectedChanges = versionManager.detectChanges();
+      versionManager.incrementVersion(type, detectedChanges);
       versionManager.autoCommit();
       break;
       
