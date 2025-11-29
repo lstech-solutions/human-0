@@ -16,6 +16,7 @@ import "@human-0/i18n";
 import { ThemeProvider, useTheme } from "../theme/ThemeProvider";
 import { ThemeSwitcher } from "../components/ui/theme-switcher";
 import { LanguageSwitcher } from "../components/ui/LanguageSwitcher";
+import { BackButton } from "../components/ui/BackButton";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -82,6 +83,9 @@ function NavigationStack() {
               // Allow screen content to respect app colorScheme
               backgroundColor: colorScheme === "dark" ? "#050B10" : "#FFFFFF",
             },
+            headerBackVisible: false,
+            headerBackTitleVisible: false,
+            gestureEnabled: true,
             headerRight: () => (
               <View className="flex-row items-center gap-2 mr-2">
                 <LanguageSwitcher />
@@ -131,12 +135,14 @@ function NavigationStack() {
             name="privacy"
             options={{
               title: "Privacy Policy",
+              headerLeft: () => <BackButton tintColor={headerTint} />,
             }}
           />
           <Stack.Screen
             name="terms"
             options={{
               title: "Terms of Service",
+              headerLeft: () => <BackButton tintColor={headerTint} />,
             }}
           />
         </Stack>
