@@ -135,7 +135,9 @@ const serveLocalApi = async (event, apiPath) => {
     
     if (typeof apiModule.GET === 'function') {
       console.log('Calling GET function...');
-      const response = await apiModule.GET();
+      const queryString = event?.rawQueryString ? `?${event.rawQueryString}` : '';
+      const requestUrl = `${UPSTREAM_BASE}${apiPath}${queryString}`;
+      const response = await apiModule.GET({ url: requestUrl });
       console.log('GET response type:', typeof response);
       console.log('GET response status:', response?.status);
       

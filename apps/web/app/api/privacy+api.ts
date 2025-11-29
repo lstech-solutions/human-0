@@ -27,16 +27,17 @@ export async function GET(request: Request) {
     console.log('Files in current dir:', fs.readdirSync('.').slice(0, 10));
     
     // Determine file path based on locale
-    let docsPath: string;
+    let docsPath: string | undefined;
     
     if (normalizedLocale === 'en') {
-      // English - files are copied to root in production, check multiple possible locations
+      // English - check multiple possible locations for different environments
       const possiblePaths = [
         path.resolve(process.cwd(), 'privacy.md'),  // Production: files copied to root
         path.resolve(process.cwd(), 'docs/privacy.md'),  // Development
         path.resolve(process.cwd(), '../docs/privacy.md'),  // Alternative dev
         path.resolve(__dirname, '../../../privacy.md'),  // Production relative
-        path.resolve(__dirname, '../../../docs/privacy.md')  // Dev relative
+        path.resolve(__dirname, '../../../docs/privacy.md'),  // Dev relative
+        path.resolve(__dirname, '../docs/privacy.md'),  // Lambda: docs next to server
       ];
       
       console.log('English paths to check:');
@@ -48,7 +49,8 @@ export async function GET(request: Request) {
       const localizedPaths = [
         path.resolve(process.cwd(), `docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/privacy.md`),  // Production
         path.resolve(process.cwd(), `../docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/privacy.md`),  // Dev
-        path.resolve(__dirname, `../../../docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/privacy.md`)  // Alternative
+        path.resolve(__dirname, `../../../docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/privacy.md`),  // Alternative
+        path.resolve(__dirname, `../docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/privacy.md`),  // Lambda
       ];
       
       console.log('Localized paths to check:');
@@ -63,7 +65,8 @@ export async function GET(request: Request) {
           path.resolve(process.cwd(), 'docs/privacy.md'),  // Development
           path.resolve(process.cwd(), '../docs/privacy.md'),  // Alternative dev
           path.resolve(__dirname, '../../../privacy.md'),  // Production relative
-          path.resolve(__dirname, '../../../docs/privacy.md')  // Dev relative
+          path.resolve(__dirname, '../../../docs/privacy.md'),  // Dev relative
+          path.resolve(__dirname, '../docs/privacy.md'),  // Lambda: docs next to server
         ];
         console.log('Fallback paths to check:');
         fallbackPaths.forEach((p, i) => console.log(`  ${i+1}. ${p} → ${fs.existsSync(p) ? 'EXISTS' : 'NOT FOUND'}`));
