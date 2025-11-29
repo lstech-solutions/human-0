@@ -1,6 +1,6 @@
 {
   "name": "human-0-monorepo",
-  "version": "1.7.24",
+  "version": "1.7.25",
   "private": true,
   "scripts": {
     "build": "turbo run build",

@@ -49,11 +49,30 @@ export function Footer() {
   // Handle legal document links with version awareness
   const handleLegalLink = (documentType: 'terms' | 'privacy') => {
     if (Platform.OS === 'web') {
-      // In web, open versioned documentation with language and theme params
-      const docsUrl = getLegalDocumentUrl(documentType, 'docs', undefined, {
-        locale: currentLanguage,
-        isDark: isDark
-      });
+      // Check if we're in development mode
+      const isDevelopment = process.env.NODE_ENV === 'development' || 
+                           window.location.hostname === 'localhost' ||
+                           window.location.hostname === '127.0.0.1';
+      
+      let docsUrl;
+      if (isDevelopment) {
+        // In development, use local server
+        const baseUrl = window.location.origin;
+        const params = new URLSearchParams();
+        if (currentLanguage && currentLanguage !== 'en') {
+          params.append('locale', currentLanguage);
+        }
+        params.append('dark', isDark.toString());
+        
+        const paramString = params.toString();
+        docsUrl = paramString ? `${baseUrl}/${documentType}?${paramString}` : `${baseUrl}/${documentType}`;
+      } else {
+        // In production, use versioned documentation
+        docsUrl = getLegalDocumentUrl(documentType, 'docs', undefined, {
+          locale: currentLanguage,
+          isDark: isDark
+        });
+      }
       
       window.open(docsUrl, '_blank');
     } else {

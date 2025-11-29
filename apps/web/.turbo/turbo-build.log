@@ -1,23 +1,23 @@
 
-> @human-0/web@1.7.23 build /home/ed/Documents/LSTS/human-0.com/apps/web
+> @human-0/web@1.7.24 build /home/ed/Documents/LSTS/human-0.com/apps/web
 > expo export -p web
 
 Starting Metro Bundler
 Static rendering is enabled. Learn more: https://docs.expo.dev/router/reference/static-rendering/
 Web node_modules/.pnpm/expo-router@6.0.15_5s3jiviqx34lsqiymzqxnr2tua/node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
 λ node_modules/.pnpm/expo-router@6.0.15_5s3jiviqx34lsqiymzqxnr2tua/node_modules/expo-router/node/render.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
-Web node_modules/.pnpm/expo-router@6.0.15_5s3jiviqx34lsqiymzqxnr2tua/node_modules/expo-router/entry.js ▓▓▓▓▓▓▓░░░░░░░░░ 49.3% (410/584)
-λ node_modules/.pnpm/expo-router@6.0.15_5s3jiviqx34lsqiymzqxnr2tua/node_modules/expo-router/node/render.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 89.3% (2191/2319)
-λ Bundled 4925ms node_modules/.pnpm/expo-router@6.0.15_5s3jiviqx34lsqiymzqxnr2tua/node_modules/expo-router/node/render.js (2683 modules)
-Web Bundled 5835ms node_modules/.pnpm/expo-router@6.0.15_5s3jiviqx34lsqiymzqxnr2tua/node_modules/expo-router/entry.js (2684 modules)
+Web node_modules/.pnpm/expo-router@6.0.15_5s3jiviqx34lsqiymzqxnr2tua/node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 91.3% (2285/2391)
+λ node_modules/.pnpm/expo-router@6.0.15_5s3jiviqx34lsqiymzqxnr2tua/node_modules/expo-router/node/render.js ▓▓░░░░░░░░░░░░░░ 15.9% (127/318)
+Web Bundled 5021ms node_modules/.pnpm/expo-router@6.0.15_5s3jiviqx34lsqiymzqxnr2tua/node_modules/expo-router/entry.js (2573 modules)
+λ Bundled 5083ms node_modules/.pnpm/expo-router@6.0.15_5s3jiviqx34lsqiymzqxnr2tua/node_modules/expo-router/node/render.js (2676 modules)
 λ apps/web/app/api/terms+api.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
-λ Bundled 1185ms apps/web/app/api/terms+api.ts (1 module)
-λ Bundled 1417ms apps/web/app/api/privacy+api.ts (1 module)
-λ Bundled 1089ms apps/web/app/api/human-stats+api.ts (1 module)
+λ Bundled 1325ms apps/web/app/api/terms+api.ts (1 module)
+λ Bundled 1024ms apps/web/app/api/privacy+api.ts (1 module)
+λ Bundled 1037ms apps/web/app/api/human-stats+api.ts (1 module)
 
 › web bundles (2):
 _expo/static/css/web-f383fb7602a5abbb39c6926c4a80f6a6.css (38.8 kB)
-_expo/static/js/web/entry-c95896615e75a457470957fdea05cc40.js (3.98 MB)
+_expo/static/js/web/entry-774d5e5eca4bd0d36696466047380ef4.js (3.98 MB)
 
 › Static routes (13):
 /nfts (29.5 kB)
