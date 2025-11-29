@@ -19,54 +19,39 @@ export async function GET(request: Request) {
     // Normalize locale (handle variants like es-CO, es-ES, etc.)
     const normalizedLocale = locale.split('-')[0]; // Get base locale (es from es-CO)
     
-    console.log('Privacy API called with locale:', locale, 'normalized:', normalizedLocale);
-    console.log('Current working directory:', process.cwd());
-    
     // Determine file path based on locale
     let docsPath: string;
     
     if (normalizedLocale === 'en') {
-      // English - use markdown files
-      const path1 = path.resolve(process.cwd(), 'docs/privacy.md');
-      const path2 = path.resolve(process.cwd(), '../docs/privacy.md');
-      console.log('Checking English paths:', path1, path2);
-      console.log('Path1 exists:', fs.existsSync(path1));
-      console.log('Path2 exists:', fs.existsSync(path2));
+      // English - use markdown files, try multiple possible locations
+      const possiblePaths = [
+        path.resolve(process.cwd(), 'docs/privacy.md'),
+        path.resolve(process.cwd(), '../docs/privacy.md'),
+        path.resolve(__dirname, '../../../docs/privacy.md'),
+        path.resolve(__dirname, '../../../../docs/privacy.md')
+      ];
       
-      if (fs.existsSync(path1)) {
-        docsPath = path1;
-      } else {
-        docsPath = path2;
-      }
+      docsPath = possiblePaths.find(p => fs.existsSync(p)) || possiblePaths[0];
     } else {
       // Other languages - use proper Docusaurus i18n structure
-      const localizedPath = path.resolve(process.cwd(), `docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/privacy.md`);
-      const devLocalizedPath = path.resolve(process.cwd(), `../docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/privacy.md`);
+      const localizedPaths = [
+        path.resolve(process.cwd(), `docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/privacy.md`),
+        path.resolve(process.cwd(), `../docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/privacy.md`),
+        path.resolve(__dirname, `../../../docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/privacy.md`)
+      ];
       
-      console.log('Checking localized paths:', localizedPath, devLocalizedPath);
-      console.log('Localized path exists:', fs.existsSync(localizedPath));
-      console.log('Dev localized path exists:', fs.existsSync(devLocalizedPath));
+      docsPath = localizedPaths.find(p => fs.existsSync(p));
       
-      if (fs.existsSync(localizedPath)) {
-        docsPath = localizedPath;
-      } else if (fs.existsSync(devLocalizedPath)) {
-        docsPath = devLocalizedPath;
-      } else {
-        // Fallback to English if localized version doesn't exist
-        const fallbackPath1 = path.resolve(process.cwd(), 'docs/privacy.md');
-        const fallbackPath2 = path.resolve(process.cwd(), '../docs/privacy.md');
-        console.log('Checking fallback paths:', fallbackPath1, fallbackPath2);
-        
-        if (fs.existsSync(fallbackPath1)) {
-          docsPath = fallbackPath1;
-        } else {
-          docsPath = fallbackPath2;
-        }
+      // Fallback to English if localized version doesn't exist
+      if (!docsPath) {
+        const fallbackPaths = [
+          path.resolve(process.cwd(), 'docs/privacy.md'),
+          path.resolve(process.cwd(), '../docs/privacy.md'),
+          path.resolve(__dirname, '../../../docs/privacy.md')
+        ];
+        docsPath = fallbackPaths.find(p => fs.existsSync(p)) || fallbackPaths[0];
       }
     }
-    
-    console.log('Final docsPath:', docsPath);
-    console.log('Final docsPath exists:', fs.existsSync(docsPath));
     
     const content = fs.readFileSync(docsPath, 'utf-8');
     
