@@ -1,7 +1,5 @@
 # Terms of Service
 
-Last updated: November 28, 2025
-
 ## Agreement
 
 By accessing and using HUMΛN-Ø ("the Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use our Service.
@@ -106,3 +104,5 @@ For questions about these Terms, please contact us through our official channels
 ---
 
 **Important Notice:** Cryptocurrency and blockchain technologies involve significant risks. Please ensure you understand these risks before using our Service.
+
+Last updated: November 29, 2025

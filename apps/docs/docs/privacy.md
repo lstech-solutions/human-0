@@ -1,7 +1,5 @@
 # Privacy Policy
 
-Last updated: November 29, 2025
-
 ## Introduction
 
 HUMΛN-Ø ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your information when you use our Web3 impact tracking platform.
@@ -61,3 +59,4 @@ This Privacy Policy is governed by the laws of the jurisdiction where our servic
 
 ---
 
+Last updated: November 29, 2025

@@ -1,7 +1,5 @@
 # Política de Privacidad
 
-Última actualización: 28 de noviembre de 2025
-
 ## Introducción
 
 HUMΛN-Ø ("nosotros", "nuestro" o "nos") está comprometido con la protección de su privacidad. Esta Política de Privacidad explica cómo recopilamos, utilizamos y protegemos su información cuando utiliza nuestra plataforma de seguimiento de impacto Web3.
@@ -58,3 +56,5 @@ Para consultas relacionadas con la privacidad, contáctenos a través de nuestro
 ---
 
 Esta Política de Privacidad se rige por las leyes de la jurisdicción donde se acceden a nuestros servicios, sin tener en cuenta los principios de conflicto de leyes.
+
+Last updated: November 29, 2025 (UTC-05:00)

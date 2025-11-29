@@ -1,7 +1,5 @@
 # Términos de Servicio
 
-Última actualización: 28 de noviembre de 2025
-
 ## Acuerdo
 
 Al acceder y utilizar HUMΛN-Ø ("el Servicio"), usted acepta estar sujeto a estos Términos de Servicio ("Términos"). Si no está de acuerdo con estos Términos, por favor no utilice nuestro Servicio.
@@ -106,3 +104,5 @@ Para preguntas sobre estos Términos, contáctenos a través de nuestros canales
 ---
 
 **Aviso Importante:** Las criptomonedas y tecnologías de blockchain implican riesgos significativos. Asegúrese de entender estos riesgos antes de utilizar nuestro Servicio.
+
+Última actualización: 29 de noviembre de 2025 (UTC-05:00)
