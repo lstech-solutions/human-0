@@ -108,9 +108,9 @@ const serveLocalApi = async (event, apiPath) => {
     
     // Map API paths to local files (corrected for actual packaged location)
     const apiFileMap = {
-      '/api/human-stats': 'server/_expo/functions/api/human-stats+api.js',
-      '/api/terms': 'server/_expo/functions/api/terms+api.js', 
-      '/api/privacy': 'server/_expo/functions/api/privacy+api.js'
+      '/api/human-stats': 'server/server/_expo/functions/api/human-stats+api.js',
+      '/api/terms': 'server/server/_expo/functions/api/terms+api.js', 
+      '/api/privacy': 'server/server/_expo/functions/api/privacy+api.js'
     };
     
     const filePath = apiFileMap[apiPath];
@@ -126,7 +126,7 @@ const serveLocalApi = async (event, apiPath) => {
     
     // List directory contents for debugging
     try {
-      const apiDir = path.join(__dirname, 'server/_expo/functions/api');
+      const apiDir = path.join(__dirname, 'server/server/_expo/functions/api');
       console.log('API directory contents:', fs.readdirSync(apiDir));
     } catch (err) {
       console.log('Cannot list API directory:', err.message);
