@@ -30,6 +30,7 @@ export default function TermsScreen() {
       endpoint="terms"
       titleKey="legal.termsTitle"
       defaultTitle="Terms of Service"
+      showTitle={false}
       showOpenInNewTab={false}
       headerContent={
         <Pressable 

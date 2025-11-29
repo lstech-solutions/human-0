@@ -128,13 +128,13 @@ function NavigationStack() {
             }}
           />
           <Stack.Screen
-            name="documentation/privacy"
+            name="privacy"
             options={{
               title: "Privacy Policy",
             }}
           />
           <Stack.Screen
-            name="documentation/terms"
+            name="terms"
             options={{
               title: "Terms of Service",
             }}
