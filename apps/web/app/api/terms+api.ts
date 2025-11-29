@@ -3,9 +3,9 @@ import path from 'path';
 
 // Helper function to get English fallback content
 function getEnglishFallback(type: 'privacy' | 'terms'): string {
-  const fallbackPath = fs.existsSync(path.resolve(process.cwd(), `docs/${type}.md`))
-    ? path.resolve(process.cwd(), `docs/${type}.md`)
-    : path.resolve(process.cwd(), `../docs/${type}.md`);
+  const fallbackPath = fs.existsSync(path.resolve(process.cwd(), `${type}.md`))
+    ? path.resolve(process.cwd(), `${type}.md`)  // Production: files copied to root
+    : path.resolve(process.cwd(), `docs/${type}.md`);  // Development
     
   return fs.readFileSync(fallbackPath, 'utf-8');
 }
@@ -23,16 +23,18 @@ export async function GET(request: Request) {
     let docsPath: string;
     
     if (normalizedLocale === 'en') {
-      // English - use markdown files
-      if (fs.existsSync(path.resolve(process.cwd(), 'docs/terms.md'))) {
-        docsPath = path.resolve(process.cwd(), 'docs/terms.md');
+      // English - files are copied to root in production, check multiple possible locations
+      if (fs.existsSync(path.resolve(process.cwd(), 'terms.md'))) {
+        docsPath = path.resolve(process.cwd(), 'terms.md');  // Production: files copied to root
+      } else if (fs.existsSync(path.resolve(process.cwd(), 'docs/terms.md'))) {
+        docsPath = path.resolve(process.cwd(), 'docs/terms.md');  // Development
       } else {
-        docsPath = path.resolve(process.cwd(), '../docs/terms.md');
+        docsPath = path.resolve(process.cwd(), '../docs/terms.md');  // Alternative dev
       }
     } else {
       // Other languages - use proper Docusaurus i18n structure
-      const localizedPath = path.resolve(process.cwd(), `docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/terms.md`);
-      const devLocalizedPath = path.resolve(process.cwd(), `../docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/terms.md`);
+      const localizedPath = path.resolve(process.cwd(), `docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/terms.md`);  // Production
+      const devLocalizedPath = path.resolve(process.cwd(), `../docs/i18n/${normalizedLocale}/docusaurus-plugin-content-docs/current/terms.md`);  // Dev
       
       if (fs.existsSync(localizedPath)) {
         docsPath = localizedPath;
@@ -40,10 +42,12 @@ export async function GET(request: Request) {
         docsPath = devLocalizedPath;
       } else {
         // Fallback to English if localized version doesn't exist
-        if (fs.existsSync(path.resolve(process.cwd(), 'docs/terms.md'))) {
-          docsPath = path.resolve(process.cwd(), 'docs/terms.md');
+        if (fs.existsSync(path.resolve(process.cwd(), 'terms.md'))) {
+          docsPath = path.resolve(process.cwd(), 'terms.md');  // Production: files copied to root
+        } else if (fs.existsSync(path.resolve(process.cwd(), 'docs/terms.md'))) {
+          docsPath = path.resolve(process.cwd(), 'docs/terms.md');  // Development
         } else {
-          docsPath = path.resolve(process.cwd(), '../docs/terms.md');
+          docsPath = path.resolve(process.cwd(), '../docs/terms.md');  // Alternative dev
         }
       }
     }

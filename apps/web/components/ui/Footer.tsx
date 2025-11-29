@@ -4,12 +4,13 @@ import { useLanguagePicker } from '@human-0/i18n/hooks';
 import { useTheme } from '../../theme/ThemeProvider';
 import { getDocsUrl } from '../../lib/docs-url';
 import { useRouter } from 'expo-router';
-import { getLegalDocumentUrl, getLegalDocumentHistoryUrl } from '../../lib/version-utils';
+import { getLegalDocumentUrl, getLegalDocumentHistoryUrl, useVersionInfo } from '../../lib/version-utils';
 
 export function Footer() {
   const { currentLanguage, languages, setLanguage } = useLanguagePicker();
   const { colorScheme } = useTheme();
   const router = useRouter();
+  const { version } = useVersionInfo();
   
   const isDark = colorScheme === 'dark';
   
@@ -176,7 +177,7 @@ export function Footer() {
             </Text>
             <View className="flex flex-row items-center gap-2 sm:gap-4">
               <Text className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
-                v1.7.23
+                v{version}
               </Text>
               <Text className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
                 Language: {currentLang?.nativeName || currentLanguage?.toUpperCase()}
