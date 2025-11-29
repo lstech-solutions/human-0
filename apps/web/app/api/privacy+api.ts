@@ -53,6 +53,11 @@ export async function GET(request: Request) {
       }
     }
     
+    // Ensure docsPath is defined (fallback to first option if somehow still undefined)
+    if (!docsPath) {
+      docsPath = path.resolve(process.cwd(), 'docs/privacy.md');
+    }
+    
     const content = fs.readFileSync(docsPath, 'utf-8');
     
     return new Response(content, {
