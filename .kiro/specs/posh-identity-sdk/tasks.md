@@ -348,25 +348,27 @@
     - Provider compatibility issues
     - _Requirements: 17.5_
 
-- [ ] 16. Prepare package for npm publication
-  - [ ] 16.1 Configure package.json for publication
+- [x] 16. Prepare package for npm publication
+  - [x] 16.1 Configure package.json for publication
     - Set proper package name, version, description
     - Configure exports for ESM and CJS
     - Set peer dependencies (React, Wagmi, Viem as optional)
     - Add keywords and repository information
     - _Requirements: 1.1, 1.5_
   
-  - [ ] 16.2 Create npm publish workflow
+  - [x] 16.2 Create npm publish workflow
     - Set up GitHub Actions for npm publish
     - Configure semantic versioning
     - Add pre-publish checks (tests, linting, build)
+    - Added automated release script
     - _Requirements: 1.5_
   
-  - [ ] 16.3 Test package installation locally
+  - [x] 16.3 Test package installation locally
     - Build package
     - Test npm pack
     - Test installation in a separate project
     - Verify types are working
+    - Published v1.0.0 to npm
     - _Requirements: 1.1, 1.2_
 
 - [ ] 17. Final checkpoint - Ensure all tests pass

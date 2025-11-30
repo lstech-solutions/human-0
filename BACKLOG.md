@@ -31,13 +31,31 @@
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| FE-001 | Web3Provider setup | ✅ | Wagmi + ConnectKit |
+| FE-001 | Web3Provider setup | ✅ | Native Web3 (no wagmi on web) |
 | FE-002 | wagmi-config | ✅ | Chain configuration |
-| FE-003 | ConnectWalletButton | ✅ | Multiple variants |
+| FE-003 | Web3ConnectButton | ✅ | Native wallet connection |
 | FE-004 | Identity store (Zustand) | ✅ | State management |
 | FE-005 | useHumanIdentity hook | ✅ | Contract interactions |
 | FE-006 | IdentityCard component | ✅ | Identity UI |
 | FE-007 | Identity screen | ✅ | `/identity` route |
+| FE-008 | Clickable navbar logo | ✅ | Navigation UX |
+| FE-009 | Reusable AppFooter | ✅ | Consistent branding |
+
+### PoSH SDK (@human-0/posh-sdk) ✅
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| SDK-001 | Core SDK architecture | ✅ | PoshClient, managers |
+| SDK-002 | Provider abstraction | ✅ | Viem, Wagmi, ethers.js |
+| SDK-003 | React hooks layer | ✅ | useIdentity, useProofs, useScore |
+| SDK-004 | TypeScript types | ✅ | Full type safety |
+| SDK-005 | Testing suite | ✅ | 46 tests passing |
+| SDK-006 | Documentation | ✅ | README, examples, guides |
+| SDK-007 | npm publishing | ✅ | v1.0.0 published |
+| SDK-008 | CI/CD workflow | ✅ | Automated releases |
+| SDK-009 | ESLint configuration | ✅ | Code quality |
+| SDK-010 | Blockchain agnostic | ✅ | Works with any EVM chain |
+| SDK-011 | Independent versioning | ✅ | Decoupled from monorepo |
 
 ### Missing - Phase 0 📋
 
@@ -156,14 +174,14 @@
 
 ## Phase 3: Ecosystem & Composability
 
-### Third-Party Integration 🔮
+### Third-Party Integration 🚧
 
 | ID | Task | Status | Priority | Notes |
 |----|------|--------|----------|-------|
-| TP-001 | PoSH Query API | 🔮 | HIGH | REST/GraphQL for dApps |
-| TP-002 | SDK for developers | 🔮 | HIGH | npm package |
-| TP-003 | Webhook notifications | 🔮 | MEDIUM | New proof events |
-| TP-004 | Embeddable widgets | 🔮 | MEDIUM | Show PoSH on any site |
+| TP-001 | PoSH Query API | 📋 | HIGH | REST/GraphQL for dApps |
+| TP-002 | SDK for developers | ✅ | HIGH | @human-0/posh-sdk v1.0.0 published |
+| TP-003 | Webhook notifications | 📋 | MEDIUM | New proof events |
+| TP-004 | Embeddable widgets | 📋 | MEDIUM | Show PoSH on any site |
 
 ### PoSH as Primitive 🔮
 
