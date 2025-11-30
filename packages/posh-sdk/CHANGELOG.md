@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2024-11-30
+
+### Fixed
+- Renamed `.eslintrc.js` to `.eslintrc.cjs` for ESM compatibility
+- Fixed CI lint errors caused by ES module scope
+
+### Changed
+- Improved documentation formatting
+
 ## [1.0.0] - 2024-11-30
 
 ### 🎉 First Independent Release
@@ -91,7 +100,8 @@ This is the first stable release of `@human-0/posh-sdk` with independent version
 - Comprehensive error messages
 - IDE autocomplete support
 
-[Unreleased]: https://github.com/lstech-solutions/human-0.com/compare/posh-sdk-v1.0.0...HEAD
+[Unreleased]: https://github.com/lstech-solutions/human-0.com/compare/posh-sdk-v1.0.1...HEAD
+[1.0.1]: https://github.com/lstech-solutions/human-0.com/compare/posh-sdk-v1.0.0...posh-sdk-v1.0.1
 [1.0.0]: https://github.com/lstech-solutions/human-0.com/releases/tag/posh-sdk-v1.0.0
 [0.2.0]: https://github.com/lstech-solutions/human-0.com/releases/tag/v0.2.0
 [0.1.0]: https://github.com/lstech-solutions/human-0.com/releases/tag/v0.1.0
