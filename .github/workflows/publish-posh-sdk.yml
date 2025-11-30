@@ -1,0 +1,88 @@
+name: Publish PoSH SDK
+
+on:
+  push:
+    tags:
+      - 'posh-sdk-v*.*.*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # Required for npm provenance
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Extract version from tag
+        id: extract_version
+        run: |
+          TAG=${GITHUB_REF#refs/tags/posh-sdk-v}
+          echo "version=$TAG" >> $GITHUB_OUTPUT
+          echo "Publishing version: $TAG"
+
+      - name: Verify package version matches tag
+        working-directory: packages/posh-sdk
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          TAG_VERSION="${{ steps.extract_version.outputs.version }}"
+          if [ "$PACKAGE_VERSION" != "$TAG_VERSION" ]; then
+            echo "Error: Package version ($PACKAGE_VERSION) doesn't match tag version ($TAG_VERSION)"
+            exit 1
+          fi
+          echo "✅ Version verified: $PACKAGE_VERSION"
+
+      - name: Build package
+        working-directory: packages/posh-sdk
+        run: pnpm run build
+
+      - name: Run tests
+        working-directory: packages/posh-sdk
+        run: pnpm run test
+
+      - name: Run linter
+        working-directory: packages/posh-sdk
+        run: pnpm run lint
+
+      - name: Publish to npm
+        working-directory: packages/posh-sdk
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: '@human-0/posh-sdk v${{ steps.extract_version.outputs.version }}'
+          body: |
+            ## @human-0/posh-sdk v${{ steps.extract_version.outputs.version }}
+            
+            Published to npm: https://www.npmjs.com/package/@human-0/posh-sdk/v/${{ steps.extract_version.outputs.version }}
+            
+            ### Installation
+            ```bash
+            npm install @human-0/posh-sdk@${{ steps.extract_version.outputs.version }}
+            ```
+            
+            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/packages/posh-sdk/CHANGELOG.md) for details.
+          draft: false
+          prerelease: false
