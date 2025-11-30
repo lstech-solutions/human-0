@@ -65,10 +65,17 @@ class VersionManager {
         });
       }
       
-      // Update packages
+      // Update packages (excluding posh-sdk which has independent versioning)
       if (fs.existsSync(packagesPath)) {
         const packages = fs.readdirSync(packagesPath);
+        const excludedPackages = ['posh-sdk']; // Packages with independent versioning
+        
         packages.forEach(pkg => {
+          if (excludedPackages.includes(pkg)) {
+            console.log(`⏭️  Skipped packages/${pkg} (independent versioning)`);
+            return;
+          }
+          
           const pkgPackagePath = path.join(packagesPath, pkg, 'package.json');
           if (fs.existsSync(pkgPackagePath)) {
             try {
