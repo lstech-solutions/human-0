@@ -7,7 +7,7 @@ interface CacheEntry<T> {
   expiresAt: number;
 }
 
-export class Cache<T = any> {
+export class Cache<T = unknown> {
   private cache: Map<string, CacheEntry<T>> = new Map();
   private ttl: number;
   private maxSize: number;

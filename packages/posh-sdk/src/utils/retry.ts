@@ -47,7 +47,7 @@ export async function retry<T>(
 /**
  * Check if an error is retryable (e.g., network errors, rate limits)
  */
-export function isRetryableError(error: any): boolean {
+export function isRetryableError(error: unknown): boolean {
   // Network errors
   if (error.code === 'NETWORK_ERROR' || error.code === 'TIMEOUT') {
     return true;

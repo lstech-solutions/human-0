@@ -97,8 +97,8 @@ export class ViemProvider implements BaseProvider {
       address: params.address,
       fromBlock: params.filter.fromBlock,
       toBlock: params.filter.toBlock,
-      // @ts-ignore - Viem types are complex here
-      event: params.abi.find((item: any) => item.name === params.functionName),
+      // @ts-expect-error - Viem types are complex here
+      event: params.abi.find((item: unknown) => (item as { name: string }).name === params.functionName),
     });
 
     return logs.map((log) => ({

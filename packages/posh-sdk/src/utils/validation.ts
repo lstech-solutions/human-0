@@ -15,8 +15,8 @@ export function isValidAddress(address: string): address is Address {
 /**
  * Validates a humanId format (bytes32)
  */
-export function isValidHumanId(humanId: string): humanId is HumanId {
-  return /^0x[a-fA-F0-9]{64}$/.test(humanId);
+export function isValidHumanId(_humanId: string): _humanId is HumanId {
+  return /^0x[a-fA-F0-9]{64}$/.test(_humanId);
 }
 
 /**
@@ -186,12 +186,12 @@ export function createDefaultConfig(overrides?: Partial<PoshConfig>): PoshConfig
  * Create configuration from a deployment name
  * This allows using pre-registered deployments
  */
-export function createConfigFromDeployment(
+export async function createConfigFromDeployment(
   deploymentName: string,
   overrides?: Partial<PoshConfig>
-): PoshConfig {
+): Promise<PoshConfig> {
   // Import dynamically to avoid circular dependency
-  const { getDeployment } = require('../contracts/registry');
+  const { getDeployment } = await import('../contracts/registry');
   const deployment = getDeployment(deploymentName);
   
   if (!deployment) {
@@ -226,13 +226,13 @@ export function validateAddress(address: string, paramName: string = 'address'):
 /**
  * Validates a humanId and throws if invalid
  */
-export function validateHumanId(humanId: string, paramName: string = 'humanId'): HumanId {
-  if (!isValidHumanId(humanId)) {
+export function validateHumanId(_humanId: string, _paramName: string = 'humanId'): HumanId {
+  if (!isValidHumanId(_humanId)) {
     throw new ValidationError(
-      `Invalid ${paramName}: ${humanId}`,
-      { [paramName]: humanId },
+      `Invalid ${_paramName}: ${_humanId}`,
+      { [_paramName]: _humanId },
       'Provide a valid humanId (0x followed by 64 hexadecimal characters)'
     );
   }
-  return humanId;
+  return _humanId;
 }

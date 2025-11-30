@@ -13,7 +13,7 @@ import {
   getBlockNumber, 
   getChainId 
 } from '@wagmi/core';
-import type { Address, Hash } from 'viem';
+import type { Hash } from 'viem';
 import type {
   BaseProvider,
   ContractCallParams,
@@ -85,14 +85,14 @@ export class WagmiProvider implements BaseProvider {
   }
 
   async getEvents(
-    params: ContractCallParams & { filter: ProviderEventFilter }
+    _params: ContractCallParams & { filter: ProviderEventFilter }
   ): Promise<ProviderEventLog[]> {
     // Wagmi doesn't have a direct getLogs equivalent
     // Would need to use the underlying Viem client
     throw new Error('getEvents not yet implemented for WagmiProvider - use ViemProvider instead');
   }
 
-  watchEvent(params: ContractCallParams & { callback: ProviderEventCallback }): ProviderUnsubscribe {
+  watchEvent(_params: ContractCallParams & { callback: ProviderEventCallback }): ProviderUnsubscribe {
     // Wagmi uses watchContractEvent from Viem
     // Would need access to the underlying client
     throw new Error('watchEvent not yet implemented for WagmiProvider - use ViemProvider instead');

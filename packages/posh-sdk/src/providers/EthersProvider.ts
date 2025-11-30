@@ -3,7 +3,7 @@
  * Implements BaseProvider using ethers.js v6
  */
 
-import type { Provider, Signer, Contract, TransactionResponse, TransactionReceipt as EthersReceipt, Log } from 'ethers';
+import type { Provider, Signer, TransactionResponse, Log } from 'ethers';
 import { ethers } from 'ethers';
 import type { Address, Hash } from 'viem';
 import type {
