@@ -1,6 +1,6 @@
 # @human-0/posh-sdk
 
-> TypeScript SDK for Proof of Sustainable Humanity (PoSH) identity management on Base L2
+> TypeScript SDK for Proof of Sustainable Humanity (PoSH) identity management - Blockchain Agnostic
 
 [![npm version](https://img.shields.io/npm/v/@human-0/posh-sdk.svg)](https://www.npmjs.com/package/@human-0/posh-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
@@ -8,7 +8,9 @@
 
 ## Overview
 
-The **@human-0/posh-sdk** provides a clean, type-safe interface for interacting with the Proof of Sustainable Humanity (PoSH) smart contracts on Base L2. It enables developers to integrate human identity verification and sustainability proof management into their applications.
+The **@human-0/posh-sdk** provides a clean, type-safe interface for interacting with the Proof of Sustainable Humanity (PoSH) smart contracts. It enables developers to integrate human identity verification and sustainability proof management into their applications.
+
+**Blockchain Agnostic**: While initially deployed on Base L2, the SDK is designed to work with any EVM-compatible blockchain. Simply configure the appropriate chain ID and contract addresses for your target network.
 
 **Perfect for:**
 - 🌍 Sustainability-focused dApps
@@ -169,11 +171,37 @@ function IdentityCard() {
 
 ### Default Configuration
 
-The SDK comes with sensible defaults for Base Sepolia testnet:
+The SDK is blockchain agnostic and can be configured for any EVM-compatible chain:
 
 ```typescript
+// Example: Base Sepolia (Testnet)
 const client = new PoshClient({
   chainId: 84532,
+  rpcUrl: 'https://sepolia.base.org',
+  contracts: {
+    humanIdentity: '0x...',
+    proofRegistry: '0x...',
+    poshNFT: '0x...',
+    humanScore: '0x...',
+  },
+});
+
+// Example: Ethereum Mainnet
+const client = new PoshClient({
+  chainId: 1,
+  rpcUrl: 'https://eth.llamarpc.com',
+  contracts: {
+    humanIdentity: '0x...',
+    proofRegistry: '0x...',
+    poshNFT: '0x...',
+    humanScore: '0x...',
+  },
+});
+
+// Example: Polygon
+const client = new PoshClient({
+  chainId: 137,
+  rpcUrl: 'https://polygon-rpc.com',
   contracts: {
     humanIdentity: '0x...',
     proofRegistry: '0x...',
