@@ -1,0 +1,78 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+## [0.2.0] - 2024-11-30
+
+### Added
+- Provider abstraction layer for framework-agnostic blockchain interactions
+- `BaseProvider` interface for standardized provider operations
+- `ViemProvider` adapter with full read/write support
+- `WagmiProvider` adapter (basic implementation)
+- `EthersProvider` adapter with full read/write support
+- Write operations for IdentityManager (`register()`, `linkExternalProof()`)
+- Gas estimation methods (`estimateRegisterGas()`, `estimateLinkProofGas()`)
+- Provider support across all managers (Identity, Proof, Score, Events)
+
+### Changed
+- `PoshClient` now accepts optional `provider` parameter for write operations
+- All managers updated to support provider-based blockchain interactions
+- Improved TypeScript type safety for provider operations
+- Enhanced error handling for provider-related operations
+
+### Technical
+- Resolved type conflicts between provider and SDK event types
+- Added proper TypeScript casting for contract ABIs
+- Improved build configuration for provider exports
+
+## [0.1.0] - 2024-11-30
+
+### Added
+- Initial release of @human-0/posh-sdk
+- Core SDK with PoshClient, IdentityManager, ProofManager, ScoreManager, EventManager
+- React hooks layer with PoshProvider and comprehensive hooks
+- Multi-deployment support for decentralized architecture
+- TypeScript support with full type definitions
+- Configuration validation and defaults
+- Caching utility with TTL support
+- Retry logic with exponential backoff
+- Error handling with custom error classes
+- Formatting utilities for addresses and values
+- Mock implementations for development without deployed contracts
+- Comprehensive documentation and examples
+- 46 passing tests
+
+### Features
+- `PoshClient` - Main SDK client
+- `useIdentity` - React hook for identity management
+- `useProofs` - React hook for proof queries
+- `useScore` - React hook for score tracking
+- `useEvents` - React hook for event subscriptions
+- Multi-deployment registry system
+- Contract ABI and address management
+- React Query integration for caching
+
+### Documentation
+- README with quick start guide
+- SETUP guide with detailed instructions
+- INTEGRATION guide for Expo Web
+- MULTI_DEPLOYMENT guide for decentralization
+- API reference documentation
+- Multiple usage examples
+- Publishing guide
+
+### Developer Experience
+- Full TypeScript support
+- ESM and CJS builds
+- Source maps included
+- Comprehensive error messages
+- IDE autocomplete support
+
+[Unreleased]: https://github.com/lstech-solutions/human-0.com/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/lstech-solutions/human-0.com/releases/tag/v0.2.0
+[0.1.0]: https://github.com/lstech-solutions/human-0.com/releases/tag/v0.1.0

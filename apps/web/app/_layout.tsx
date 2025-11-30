@@ -3,7 +3,7 @@ import {
   ThemeProvider as NavigationThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -44,6 +44,32 @@ const LightTheme = {
     border: "#0A162833",
   },
 };
+
+function ClickableTitle({ color, isHome }: { color: string; isHome?: boolean }) {
+  const router = useRouter();
+  
+  const handleClick = () => {
+    if (isHome) {
+      // On home page, scroll to top
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      // On other pages, navigate home
+      router.push('/');
+    }
+  };
+  
+  return (
+    <button
+      onClick={handleClick}
+      className="text-lg font-bold hover:opacity-80 transition-opacity cursor-pointer"
+      style={{ color }}
+    >
+      HUMΛN-Ø
+    </button>
+  );
+}
 
 function NavigationStack() {
   const { colorScheme } = useTheme();
@@ -98,7 +124,8 @@ function NavigationStack() {
             name="index" 
             options={{ 
               headerShown: true,
-              title: "HUMΛN-Ø"
+              headerTitle: () => <ClickableTitle color={headerTint} isHome />,
+              headerLeft: () => null,
             }} 
           />
           <Stack.Screen
@@ -117,6 +144,12 @@ function NavigationStack() {
             name="profile"
             options={{
               title: "Profile",
+            }}
+          />
+          <Stack.Screen
+            name="identity"
+            options={{
+              headerTitle: () => <ClickableTitle color={headerTint} />,
             }}
           />
           <Stack.Screen

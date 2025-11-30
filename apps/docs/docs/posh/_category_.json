@@ -1,0 +1,14 @@
+{
+  "label": "Proof of Sustainable Humanity (PoSH)",
+  "position": 3,
+  "link": {
+    "type": "doc",
+    "id": "posh/index"
+  },
+  "collapsible": true,
+  "collapsed": false,
+  "className": "posh-category",
+  "customProps": {
+    "description": "A novel cryptographic primitive for verifying human-scale sustainability contributions"
+  }
+}

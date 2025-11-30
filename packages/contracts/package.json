@@ -1,13 +1,24 @@
 {
   "name": "@human-0/contracts",
-  "version": "1.7.44",
+  "version": "1.8.0",
   "private": true,
+  "main": "typechain-types/index.ts",
+  "types": "typechain-types/index.ts",
+  "exports": {
+    ".": "./typechain-types/index.ts",
+    "./addresses": "./deployments/addresses.json"
+  },
   "scripts": {
     "build": "hardhat compile",
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "deploy:local": "hardhat run scripts/deploy.ts --network localhost",
+    "deploy:base-sepolia": "hardhat run scripts/deploy.ts --network baseSepolia"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-toolbox": "4.0.0",
     "hardhat": "^2.19.0",
     "typescript": "^5.0.0"
   }

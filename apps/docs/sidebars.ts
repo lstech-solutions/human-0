@@ -19,6 +19,19 @@ const sidebars: SidebarsConfig = {
     'architecture',
     {
       type: 'category',
+      label: 'Proof of Sustainable Humanity (PoSH)',
+      collapsed: false,
+      items: [
+        'posh/index',
+        'posh/architecture',
+        'posh/smart-contracts',
+        'posh/mrv-integration',
+        'posh/zero-knowledge',
+        'posh/whitepaper',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Legal',
       items: [
         'privacy',

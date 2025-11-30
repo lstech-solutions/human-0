@@ -635,11 +635,11 @@ export default function Home() {
               </MagnetizeButton>
 
               <MagnetizeButton
-                onClick={() => window.location.href = '/pdf-download'}
+                onClick={() => window.location.href = '/identity'}
                 className="px-5 lg:px-6 py-2 lg:py-2.5 bg-white/85 dark:bg-transparent border border-human-border/80 dark:border-human-border text-human-text-light dark:text-human-text-dark font-mono text-xs lg:text-sm hover:text-white dark:hover:text-white transition-all duration-200 magnet-btn-gradient"
                 style={{ borderWidth: '1px' }}
               >
-                <span>{t("hero.cta.downloadPdf")}</span>
+                <span>{t("hero.cta.proveIdentity")}</span>
               </MagnetizeButton>
             </div>
 
